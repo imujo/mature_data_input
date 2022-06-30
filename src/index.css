@@ -7,7 +7,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.choose_matura{
+  margin: 20px 0;
+  display: flex;  
+  justify-content: space-evenly;
+}
+
+.matura_name{
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.dodaj_zadatak{
+  display: flex;
+  justify-content: center;
+  margin: 70px 0;
 }
