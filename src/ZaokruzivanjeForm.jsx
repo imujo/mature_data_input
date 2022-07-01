@@ -1,19 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Form from 'react-bootstrap/Form'
 
+export default function ZaokruzivanjeForm({ setValue}) {
 
-export default function ZaokruzivanjeForm() {
+  const [tekst, setTekst] = useState('')
+  const [citat, setCitat] = useState('')
+
+
+  useEffect(() => {
+    
+    let text = {
+      tekst: tekst,
+      citat: citat
+    }
+
+    setValue(text)
+
+  }, [
+    tekst, citat
+  ])
+  
+
+
   return (
-    <div>
-        <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-            <Form.Label>Broj zadatka</Form.Label>
-            <Form.Control type="number" className='z_broj' placeholder="Broj" />
-        </Form.Group>
+    <>
+        
 
         <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
             <Form.Label>Tekst zadatka</Form.Label>
-            <Form.Control type="number" className='z_broj' placeholder="Broj" />
+            <Form.Control type="text" className='z_tekst' placeholder="Tekst zadatka"
+            onChange={e=> setTekst(e.target.value)}
+            value={tekst}
+            />
         </Form.Group>
-    </div>
+        <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
+            <Form.Label>Citat</Form.Label>
+            <Form.Control type="text" className='z_tekst' placeholder="Citat" 
+            onChange={e=>setCitat(e.target.value)}
+            value={citat}
+            />
+        </Form.Group>
+        
+    </>
   )
 }

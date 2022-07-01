@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import DropdownComponent from './DropdownComponent'
 import Button from 'react-bootstrap/Button'
-import Zadatak from './Zadatak'
+import AddZadatak from './AddZadatak'
 
 export default function Matura() {
 
@@ -18,10 +18,27 @@ export default function Matura() {
     const [sezona, setSezona] = useState('')
     
     const [matura, setMatura] = useState('')
+    const [maturaId, setMaturaId] = useState(0)
 
     const submit = () => { 
         setMatura([predmet, godina, razina, sezona].join(' - '))
+        setMaturaId(1)
      }
+
+     const [zadatciList, setZadatciList] = useState([])
+     const [zadatciListIndex, setZadatciListIndex] = useState(0)
+
+
+    function onAddZadatak(){
+      setZadatciList(zadatciList.concat(zadatciListIndex))
+      console.log(zadatciListIndex)
+      setZadatciListIndex(zadatciListIndex+1)
+    }
+
+    function onRemoveZadatak(i){
+      console.log(i)
+      setZadatciList(zadatci => zadatci.filter((item, _) => item !== i))
+    }
 
 
     return (
@@ -41,10 +58,23 @@ export default function Matura() {
         </div>
         <h3 className="matura_name">{matura}</h3>
 
-        <Zadatak></Zadatak>
-        <div className="dodaj_zadatak">
-            <Button variant="danger"
-        >Dodaj zadatak</Button>
+        {zadatciList.map((item, i)=> {return <AddZadatak key={item} index={item} removeZadatak={onRemoveZadatak}/>})}
+        <div className="dodajButtons">
+            <Button 
+              variant="danger"
+              onClick={onAddZadatak}
+              disabled={!maturaId}
+            >
+              Dodaj zadatak
+            </Button>
+
+            <Button 
+                  variant="danger"
+                  // onClick={}
+                  disabled={!maturaId}
+            >
+              Dodaj nadzadatak
+            </Button>
         </div>
         
       </main>

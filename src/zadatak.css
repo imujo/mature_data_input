@@ -1,7 +1,22 @@
 .zadatakDiv{
-    background-color: rgb(206, 206, 206);
+    background-color: rgb(229, 229, 229);
     min-height: 500px;
     margin: 30px 0;
+    display: flex;
+    padding: 50px 20px;
+    gap: 50px;
+    position: relative;
+    flex-direction: column;
+}
+
+.z_form > div{
+    width: 50%;
+}
+
+.z_form{
+    display: flex;
+    gap: 50px;
+
 }
 
 .z_item{
@@ -14,4 +29,45 @@
 .z_broj{
     width: 100px !important;
     background-color: red;
+}
+
+label{
+    min-width: 120px;
+}
+
+.rjesenjeDiv{
+    border-bottom: 1px solid rgb(181, 181, 181);
+    margin-bottom: 50px;
+    position: relative;
+    padding-bottom: 50px;
+}
+
+
+
+
+.z_textarea{
+    max-height: 500px;
+}
+
+h2{
+    margin-bottom: 40px !important;
+}
+
+.close{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-weight: 700;
+}
+.close_rjesenje{
+    top: -40px;
+}
+
+.z_submit{
+    width: 100px;
+}
+
+.z_submitDiv{
+    display: flex;
+    justify-content: center;
 }

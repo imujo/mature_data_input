@@ -19,8 +19,18 @@ body {
   font-size: 1.5em;
 }
 
-.dodaj_zadatak{
+.dodajButtons{
   display: flex;
   justify-content: center;
   margin: 70px 0;
+  gap: 50px;
+}
+
+button{
+   background-color: transparent;
+   color: inherit;
+   border: none;
+   cursor: pointer;
+   outline: inherit;
+
 }
