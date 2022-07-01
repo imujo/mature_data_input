@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 
 
-export default function DropdownComponent({options, option, setOption, optionName, }) {
+export default function DropdownComponent({options, option, setOption, optionName, disabled}) {
 
     const [title, setTitle] = useState('')
 
@@ -19,12 +19,12 @@ export default function DropdownComponent({options, option, setOption, optionNam
     
 
   return (
-    <DropdownButton id="dropdown-basic-button" title={title}>
+    <DropdownButton id="dropdown-basic-button" title={title} disabled={disabled}>
         {
             options.map((m, i) => {
                 return (
                     <Dropdown.Item 
-                    key={i}
+                    key={i} 
                     onClick={()=>{
                         setOption(m)
                     }}

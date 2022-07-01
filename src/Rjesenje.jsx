@@ -7,7 +7,7 @@ export default function Rjesenje({index, removeRjesenje, vrsta}) {
 
 
   return (
-    <Form className='rjesenjeDiv'>
+    <Form className='rjesenjeDiv border_bottom'>
         <button className="close close_rjesenje" onClick={()=>removeRjesenje(index)}>x</button>
 
 
@@ -43,17 +43,16 @@ export default function Rjesenje({index, removeRjesenje, vrsta}) {
 
         }
         
-        {
-          vrsta === 'kratki odgovor' || vrsta === 'dugi odgovor' ?
+        
 
-          <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-              <Form.Label>Slika</Form.Label>
-            <input type="file" name="slika" id="slika" />
-          </Form.Group>
+        <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
+            <Form.Label>Slika</Form.Label>
+          <input type="file" name="slika" id="slika" accept="image/jpeg, image/png" />
+        </Form.Group>
 
-          : null
+       
 
-        }
+        
 
     </Form>
   )

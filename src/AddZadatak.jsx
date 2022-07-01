@@ -1,11 +1,11 @@
 import React, {  useState } from 'react'
 import DropdownComponent from './DropdownComponent'
 import Form from 'react-bootstrap/Form'
-import ZaokruzivanjeForm from './ZaokruzivanjeForm'
+import ZaokruzivanjeForm from './zadatakForms/ZaokruzivanjeForm'
 import Button from 'react-bootstrap/Button'
 import Rjesenje from './Rjesenje'
-import KratkiOdgovorForm from './KratkiOdgovorForm'
-import DugiOdgovorForm from './DugiOdgovorForm'
+import KratkiOdgovorForm from './zadatakForms/KratkiOdgovorForm'
+import DugiOdgovorForm from './zadatakForms/DugiOdgovorForm'
 
 export default function AddZadatak({removeZadatak, index}) {
 
@@ -109,6 +109,7 @@ export default function AddZadatak({removeZadatak, index}) {
             <input type="file" disabled={!vrsta} 
             onChange={e=>setSlika(e.target.value)}
             value={slika}
+            accept="image/jpeg, image/png"
             />
           </Form.Group>
         </div>

@@ -41,6 +41,10 @@ export default function ZaokruzivanjeForm({ setValue}) {
             />
         </Form.Group>
         
+        <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
+            <Form.Label>Je li primjer?</Form.Label>
+            <Form.Check type="checkbox" />
+        </Form.Group>
     </>
   )
 }

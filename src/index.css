@@ -34,3 +34,8 @@ button{
    outline: inherit;
 
 }
+
+
+.bold{
+  font-weight: 800;
+}

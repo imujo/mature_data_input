@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import DropdownComponent from './DropdownComponent'
 import Button from 'react-bootstrap/Button'
 import AddZadatak from './AddZadatak'
+import AddNadzadatak from './AddNadzadatak'
+
 
 export default function Matura() {
 
@@ -23,6 +25,7 @@ export default function Matura() {
     const submit = () => { 
         setMatura([predmet, godina, razina, sezona].join(' - '))
         setMaturaId(1)
+        setIsMaturaSubmitted(true)
      }
 
      const [zadatciList, setZadatciList] = useState([])
@@ -40,17 +43,20 @@ export default function Matura() {
       setZadatciList(zadatci => zadatci.filter((item, _) => item !== i))
     }
 
+    const [isMaturaSubmitted, setIsMaturaSubmitted] = useState(false)
+
+
 
     return (
       <main>
         <div className="choose_matura">
-            <DropdownComponent options={predmetOptions} option={predmet} setOption={setPredmet} optionName={'predmet'}>
+            <DropdownComponent options={predmetOptions} option={predmet} setOption={setPredmet} optionName={'predmet'} disabled={isMaturaSubmitted}>
             </DropdownComponent>
-            <DropdownComponent options={godinaOpitions} option={godina} setOption={setGodina} optionName={'godina'}>
+            <DropdownComponent options={godinaOpitions} option={godina} setOption={setGodina} optionName={'godina'} disabled={isMaturaSubmitted} >
             </DropdownComponent>
-            <DropdownComponent options={razinaOptions} option={razina} setOption={setRazina} optionName={'razina'}>
+            <DropdownComponent options={razinaOptions} option={razina} setOption={setRazina} optionName={'razina'} disabled={isMaturaSubmitted} >
             </DropdownComponent>
-            <DropdownComponent options={sezonaOptions} option={sezona} setOption={setSezona} optionName={'sezona'}>
+            <DropdownComponent options={sezonaOptions} option={sezona} setOption={setSezona} optionName={'sezona'} disabled={isMaturaSubmitted} >
             </DropdownComponent>
             <Button variant="danger"
             onClick={submit}
@@ -59,6 +65,7 @@ export default function Matura() {
         <h3 className="matura_name">{matura}</h3>
 
         {zadatciList.map((item, i)=> {return <AddZadatak key={item} index={item} removeZadatak={onRemoveZadatak}/>})}
+        <AddNadzadatak />
         <div className="dodajButtons">
             <Button 
               variant="danger"

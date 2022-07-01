@@ -22,7 +22,7 @@ export default function DugiOdgovorForm({setValue}) {
             value={tekst}
             onChange={e=> setTekst(e.target.value)}
             />
-          </Form.Group>
+        </Form.Group>
     </>
   )
 }
