@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import Form from 'react-bootstrap/Form'
 import Recenice from './Recenice'
 import Button from 'react-bootstrap/Button'
+import TextBox from '../inputs/TextBox'
+import TextArea from '../inputs/TextArea'
 
 
 export default function NadopuniIzbor() {
@@ -23,21 +24,12 @@ export default function NadopuniIzbor() {
   
   return (
     <>
-      <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-            <Form.Label>Naslov</Form.Label>
-            <Form.Control type="text" className='z_tekst' placeholder="Naslov"
-            onChange={e=>setNaslov(e.target.value)}
-            value={naslov}
-            />
-      </Form.Group>
+      
+      <TextBox title="Naslov" value={naslov} setValue={setNaslov} />
 
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Tekst</Form.Label>
-            <Form.Control className='z_textarea' as="textarea" rows={3} placeholder='Tekst'
-            value={tekst}
-            onChange={e=> setTekst(e.target.value)}
-            />
-      </Form.Group>
+      <TextArea title="Tekst" value={tekst} setValue={setTekst} />
+
+      
       <p className='napomena'>NAPOMENA: Zamijeni npr. (19)____ sa <span className='bold'> %%19%%</span></p>
       <br />
 

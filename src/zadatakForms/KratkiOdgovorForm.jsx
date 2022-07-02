@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Form from 'react-bootstrap/Form'
-
+import TextBox from '../inputs/TextBox'
 
 export default function KratkiOdgovorForm({setValue}) {
 
@@ -16,13 +15,7 @@ export default function KratkiOdgovorForm({setValue}) {
     
   return (
     <>
-        <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-            <Form.Label>Tekst zadatka</Form.Label>
-            <Form.Control type="text" className='z_tekst' placeholder="Tekst zadatka"
-            onChange={e=>setTekst(e.target.value)}
-            value={tekst}
-            />
-        </Form.Group>
+        <TextBox title="Tekst zadatka" value={tekst} setValue={setTekst} />
     </>
   )
 }

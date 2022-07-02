@@ -16,7 +16,6 @@ export default function PovezivanjeTekstovi() {
   }
 
   function onRemoveOsoba(i){
-    console.log(i)
     setosobeList(zadatci => zadatci.filter((item, _) => item !== i))
   }
 

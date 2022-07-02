@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Form from 'react-bootstrap/Form'
-
+import TextArea from '../inputs/TextArea'
 
 
 export default function DugiOdgovorForm({setValue}) {
@@ -16,13 +15,7 @@ export default function DugiOdgovorForm({setValue}) {
 
   return (
     <>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Tekst</Form.Label>
-            <Form.Control className='z_textarea' as="textarea" rows={3}
-            value={tekst}
-            onChange={e=> setTekst(e.target.value)}
-            />
-        </Form.Group>
+        <TextArea title="Tekst" value={tekst} setValue={setTekst} />
     </>
   )
 }

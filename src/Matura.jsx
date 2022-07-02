@@ -32,16 +32,20 @@ export default function Matura() {
      const [zadatciListIndex, setZadatciListIndex] = useState(0)
 
 
-    function onAddZadatak(){
-      setZadatciList(zadatciList.concat(zadatciListIndex))
-      console.log(zadatciListIndex)
+    function onAddZadatak(type){
+      setZadatciList(zadatciList.concat({
+        index: zadatciListIndex,
+        type:type
+      }))
       setZadatciListIndex(zadatciListIndex+1)
     }
 
     function onRemoveZadatak(i){
-      console.log(i)
-      setZadatciList(zadatci => zadatci.filter((item, _) => item !== i))
+      setZadatciList(zadatci => zadatci.filter((item, _) => item.index !== i))
     }
+
+
+    
 
     const [isMaturaSubmitted, setIsMaturaSubmitted] = useState(false)
 
@@ -64,12 +68,20 @@ export default function Matura() {
         </div>
         <h3 className="matura_name">{matura}</h3>
 
-        {zadatciList.map((item, i)=> {return <AddZadatak key={item} index={item} removeZadatak={onRemoveZadatak}/>})}
-        <AddNadzadatak />
+        {zadatciList.map((item, i)=> {
+          if (item.type === 'zadatak'){
+            return <AddZadatak key={item.index} index={item.index} removeZadatak={onRemoveZadatak} nadzadatak={''} />
+          }else if (item.type === 'nadzadatak'){
+            return <AddNadzadatak key={item.index} index={item.index} removeZadatak={onRemoveZadatak}/>
+          }
+
+          return ''
+          
+          })}
         <div className="dodajButtons">
             <Button 
               variant="danger"
-              onClick={onAddZadatak}
+              onClick={()=>onAddZadatak('zadatak')}
               disabled={!maturaId}
             >
               Dodaj zadatak
@@ -77,7 +89,7 @@ export default function Matura() {
 
             <Button 
                   variant="danger"
-                  // onClick={}
+                  onClick={()=> onAddZadatak('nadzadatak')}
                   disabled={!maturaId}
             >
               Dodaj nadzadatak

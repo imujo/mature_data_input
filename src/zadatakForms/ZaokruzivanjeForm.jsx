@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import Form from 'react-bootstrap/Form'
+import TextBox from '../inputs/TextBox'
+import CheckBox from '../inputs/CheckBox'
+
 
 export default function ZaokruzivanjeForm({ setValue}) {
 
   const [tekst, setTekst] = useState('')
   const [citat, setCitat] = useState('')
+  const [primjer, setPrimjer] = useState(false)
 
 
   useEffect(() => {
@@ -26,25 +29,10 @@ export default function ZaokruzivanjeForm({ setValue}) {
     <>
         
 
-        <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-            <Form.Label>Tekst zadatka</Form.Label>
-            <Form.Control type="text" className='z_tekst' placeholder="Tekst zadatka"
-            onChange={e=> setTekst(e.target.value)}
-            value={tekst}
-            />
-        </Form.Group>
-        <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-            <Form.Label>Citat</Form.Label>
-            <Form.Control type="text" className='z_tekst' placeholder="Citat" 
-            onChange={e=>setCitat(e.target.value)}
-            value={citat}
-            />
-        </Form.Group>
-        
-        <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-            <Form.Label>Je li primjer?</Form.Label>
-            <Form.Check type="checkbox" />
-        </Form.Group>
+
+      <TextBox title="Tekst zadatka" value={tekst} setValue={setTekst} />
+      <TextBox title="Citat" value={citat} setValue={setCitat} />
+      <CheckBox title='Je li primjer?' value={primjer} setValue={setPrimjer} />
     </>
   )
 }

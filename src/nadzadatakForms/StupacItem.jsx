@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import Form from 'react-bootstrap/Form'
+import Slovo from '../inputs/Slovo'
+import TextBox from '../inputs/TextBox'
 
 
-export default function StupacItem({index, removeStupacItem}) {
+export default function StupacItem({index, removeStupacItem, type}) {
 
   const [slovoBroj, setSlovoBroj] = useState('')
   const [recenica, setRecenica] = useState('')
@@ -11,18 +12,9 @@ export default function StupacItem({index, removeStupacItem}) {
     <div className='stupacItem'>
       <button className="close close_rjesenje" onClick={()=>removeStupacItem(index)}>x</button>
 
-      <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-              <Form.Label>Slovo/Broj</Form.Label>
-              <Form.Control maxLength={1} type="text" className='z_tekst' placeholder="Slovo/Broj" value={slovoBroj} onChange={e=>setSlovoBroj(e.target.value)} />
-      </Form.Group>
+      <Slovo title={type} value={slovoBroj} setValue={setSlovoBroj} />
 
-      <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-          <Form.Label>Recenica</Form.Label>
-          <Form.Control type="text" className='z_tekst' placeholder="Recenica"
-          onChange={e=>setRecenica(e.target.value)}
-          value={recenica}
-          />
-      </Form.Group>
+      <TextBox title="Recenica" value={recenica} setValue={setRecenica}/>
 
     </div>
   )

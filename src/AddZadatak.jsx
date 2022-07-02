@@ -1,13 +1,18 @@
-import React, {  useState } from 'react'
-import DropdownComponent from './DropdownComponent'
+import React, { useEffect, useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import ZaokruzivanjeForm from './zadatakForms/ZaokruzivanjeForm'
 import Button from 'react-bootstrap/Button'
 import Rjesenje from './Rjesenje'
 import KratkiOdgovorForm from './zadatakForms/KratkiOdgovorForm'
 import DugiOdgovorForm from './zadatakForms/DugiOdgovorForm'
+import VrstaZadatka from './inputs/VrstaZadatka'
+import BrojZadatka from './inputs/BrojZadatka'
+import BrojBodova from './inputs/BrojBodova'
+import CheckBox from './inputs/CheckBox'
+import FileInput from './inputs/FileInput'
 
-export default function AddZadatak({removeZadatak, index}) {
+
+export default function AddZadatak({removeZadatak, index, nadzadatak}) {
 
   
   
@@ -19,7 +24,18 @@ export default function AddZadatak({removeZadatak, index}) {
     const [zadatakTekst, setZadatakTekst] = useState({})
     const [brojBodova, setBrojBodova] = useState(0)
     const [slika, setSlika] = useState('')
+    const [primjer, setPrimjer] = useState(false)
 
+    useEffect(() => {
+      setZadatakBroj(0)
+      setZadatakTekst('')
+      setBrojBodova(0)
+      setSlika('')
+      setPrimjer(false)
+
+    
+    }, [vrsta, nadzadatak])
+    
     
 
 
@@ -34,7 +50,6 @@ export default function AddZadatak({removeZadatak, index}) {
     }
 
     function onRemoveRjesenje(i){
-      console.log(i)
       setrjesenjeList(zadatci => zadatci.filter((item, _) => item !== i))
     }
 
@@ -52,7 +67,54 @@ export default function AddZadatak({removeZadatak, index}) {
 
       console.log(data)
      }
+  
+  
 
+
+  const formatOptions = {
+    'zaokruzivanje': [
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
+      <ZaokruzivanjeForm setValue={setZadatakTekst}></ZaokruzivanjeForm>,
+      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} />
+    ],
+    'kratki odgovor': [
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
+      <KratkiOdgovorForm setValue={setZadatakTekst} />,
+      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} />
+    ],
+    'dugi odgovor': [
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
+      <DugiOdgovorForm setValue={setZadatakTekst} />,
+      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} />
+    ],
+    'tekst i zaokruzivanje': [
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
+      <ZaokruzivanjeForm setValue={setZadatakTekst}></ZaokruzivanjeForm>,
+      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} />
+    ],
+    'povezivanje tekstovi': [
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
+      <KratkiOdgovorForm setValue={setZadatakTekst} />,
+      <CheckBox title='Je li primjer?' value={primjer} setValue={setPrimjer} />,
+    ],
+    'nadopuni izbor': [
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
+    ],
+    'nadopuni slobodno': [
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
+    ],
+    'povezivanje': [
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
+    ],
+  }
     
 
 
@@ -63,71 +125,33 @@ export default function AddZadatak({removeZadatak, index}) {
         <div className="zadatak">
         <h2>Zadatak {zadatakBroj}</h2>
 
-        <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-            <Form.Label>Vrsta zadatka</Form.Label>
-            <DropdownComponent options={vrstaOptions} option={vrsta} optionName={'vrsta'} setOption={setVrsta} ></DropdownComponent>
-            <Form.Text className="text-muted">
-            </Form.Text>
-        </Form.Group>
-
-        <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-              <Form.Label>Broj zadatka</Form.Label>
-              <Form.Control disabled={!vrsta} step='0.1' type="number" className='z_broj' placeholder="Broj"
-              onChange={e=>setZadatakBroj(e.target.value)}
-              value={zadatakBroj}
-              />
-          </Form.Group>
-
-          <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-              <Form.Label>Broj bodova</Form.Label>
-              <Form.Control disabled={!vrsta} type="number" className='z_broj' placeholder="Broj"
-              onChange={e=>setBrojBodova(e.target.value)}
-              value={brojBodova}
-              />
-          </Form.Group>
-
+        
         {
-            vrsta === 'zaokruzivanje' ? 
-            <ZaokruzivanjeForm setValue={setZadatakTekst}></ZaokruzivanjeForm>
-            :
-            null
+          nadzadatak ? null :
+          <VrstaZadatka vrstaOptions={vrstaOptions} vrsta={vrsta} setVrsta={setVrsta} />
         }
-        {
-            vrsta === 'kratki odgovor' ? 
-            <KratkiOdgovorForm setValue={setZadatakTekst} />
-            :
-            null
-        }
-        {
-            vrsta === 'dugi odgovor' ? 
-              <DugiOdgovorForm setValue={setZadatakTekst} />
-            :
-            null
-        }
-        <Form.Group className="mb-3 z_item" controlId="formBasicEmail">
-              <Form.Label>Slika</Form.Label>
-            <input type="file" disabled={!vrsta} 
-            onChange={e=>setSlika(e.target.value)}
-            value={slika}
-            accept="image/jpeg, image/png"
-            />
-          </Form.Group>
+        {formatOptions[nadzadatak ? nadzadatak : vrsta]}
+          
+        
+        
+
         </div>
 
         <div className="rjesenje">
           <h2>Rjesenje</h2>
-          {rjesenjeList.map((item, i)=> {return <Rjesenje key={item} index={item} removeRjesenje={onRemoveRjesenje} vrsta={vrsta} />})}
+          {rjesenjeList.map((item, i)=> {return <Rjesenje key={item} index={item} removeRjesenje={onRemoveRjesenje} vrsta={vrsta
+          } nadzadatak={nadzadatak} />})}
 
           <Button 
           variant="danger" 
-          disabled={!vrsta}
+          disabled={!vrsta && !nadzadatak}
           onClick={onAddRjesenje}
           >Dodaj rjesenje</Button>
         </div>
 
       </div>
       <div className="z_submitDiv">
-      <Button variant="success" type="submit" className='z_submit'>
+      <Button variant="danger" type="submit" className='z_submit'>
         Submit
       </Button>
 

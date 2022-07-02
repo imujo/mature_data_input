@@ -74,18 +74,18 @@ h2{
 
 
 .nadzadatakDiv{
-    background-color: rgb(189, 189, 189);
+    background-color: rgb(211, 211, 211);
     min-height: 500px;
     margin: 30px 0;
     display: flex;
     padding: 50px 20px;
     position: relative;
     gap: 50px;
+    flex-direction: column;
 }
 
-.nadzadatakDiv > div{
-    width: 50%;
-}
+
+
 
 .personTekst{
     border-bottom: 1px solid rgb(149, 149, 149);
@@ -115,4 +115,9 @@ h2{
     margin-bottom: 50px;
     padding-bottom: 50px;
     position: relative;
+}
+
+.nz_buttons{
+    display: flex;
+    justify-content: center;
 }
