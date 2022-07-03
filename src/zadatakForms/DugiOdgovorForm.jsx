@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import TextArea from '../inputs/TextArea'
 
 
-export default function DugiOdgovorForm({setValue}) {
+export default function DugiOdgovorForm({value, setValue}) {
 
-    const [tekst, setTekst] = useState('')
+    const [tekst, setTekst] = useState(value ? value.tekst : '')
 
     useEffect(() => {
         setValue({

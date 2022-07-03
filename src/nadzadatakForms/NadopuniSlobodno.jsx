@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TextBox from '../inputs/TextBox'
 import TextArea from '../inputs/TextArea'
 
-export default function NadopuniSlobodno() {
+export default function NadopuniSlobodno({value, setValue}) {
 
-  const [naslov, setNaslov] = useState('')
-  const [tekst, setTekst] = useState('')
+  const [naslov, setNaslov] = useState(value ? value.naslov : '')
+  const [tekst, setTekst] = useState(value ? value.tekst : '')
+
+  useEffect(() => {
+    setValue({
+      naslov: naslov,
+      tekst: tekst
+    })
+  }, [tekst, naslov])
+  
 
   return (
     <>

@@ -3,9 +3,9 @@ import { Button } from 'react-bootstrap'
 import StupacItem from './StupacItem'
 
 
-export default function Povezivanje() {
+export default function Povezivanje({value, setValue}) {
 
-  const [stupac1, setstupac1] = useState([])
+  const [stupac1, setstupac1] = useState(value ? value.stupac1 : [])
   const [stupac1Index, setstupac1Index] = useState(0)
 
   function onAddStupac1(){
@@ -19,7 +19,7 @@ export default function Povezivanje() {
 
 
 
-  const [stupac2, setstupac2] = useState([])
+  const [stupac2, setstupac2] = useState(value ? value.stupac2 : [])
   const [stupac2Index, setstupac2Index] = useState(0)
 
   function onAddStupac2(){
@@ -36,7 +36,16 @@ export default function Povezivanje() {
       <h5>Stupac 1</h5>
       <br />
 
-      {stupac1.map((item, i)=> {return <StupacItem key={item} index={item} removeStupacItem={onRemoveStupac1} type='Broj' />})}
+      {stupac1.map((item, i)=> {
+        return <StupacItem 
+        key={i} 
+        index={i} 
+        removeStupacItem={onRemoveStupac1} 
+        type='Broj'
+        slovoBroj_db={item.slovoBroj}
+        recenica_db={item.recenica}
+        
+        />})}
 
       <Button 
           variant="danger" 
@@ -48,7 +57,15 @@ export default function Povezivanje() {
       <h5>Stupac 2</h5>
       <br />
 
-      {stupac2.map((item, i)=> {return <StupacItem key={item} index={item} removeStupacItem={onRemoveStupac2} type="Slovo" />})}
+      {stupac2.map((item, i)=> {
+        return <StupacItem 
+          key={i} 
+          index={i} 
+          removeStupacItem={onRemoveStupac2} 
+          type="Slovo"
+          slovoBroj_db={item.slovoBroj}
+          recenica_db={item.recenica}
+        />})}
 
       <Button 
           variant="danger" 

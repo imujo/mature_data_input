@@ -1,13 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TextBox from '../inputs/TextBox'
 import TextArea from '../inputs/TextArea'
 
 
-export default function TekstIZaokruzivanje() {
+export default function TekstIZaokruzivanje({value, setValue}) {
 
-  const [naslov, setNaslov] = useState('')
-  const [tekst, setTekst] = useState('')
-  const [footnote, setFootnote] = useState('')
+  const [naslov, setNaslov] = useState(value ? value.naslov : '')
+  const [tekst, setTekst] = useState(value ? value.tekst : '')
+  const [footnote, setFootnote] = useState(value ? value.footnote : '')
+
+  useEffect(() => {
+    setValue({
+      naslov: naslov,
+      tekst: tekst,
+      footnote: footnote
+    })
+
+  }, [naslov, tekst, footnote])
+  
 
   return (
     <>

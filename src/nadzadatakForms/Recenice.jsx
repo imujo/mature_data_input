@@ -1,15 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CheckBox from '../inputs/CheckBox'
 import Slovo from '../inputs/Slovo'
 import TextBox from '../inputs/TextBox'
 
 
 
-export default function Recenice({index, removeOsoba}) {
+export default function Recenice({index, removeOsoba, slovo_db, recenica_db, primjer_db}) {
 
-    const [slovo, setSlovo] = useState('')
-    const [recenica, setRecenica] = useState('')
-    const [primjer, setPrimjer] = useState(false)
+    const [slovo, setSlovo] = useState(slovo_db ? slovo_db : '')
+    const [recenica, setRecenica] = useState(recenica_db ? recenica_db : '')
+    const [primjer, setPrimjer] = useState(primjer_db ? primjer_db : false)
+    const [data, setData] = useState({})
+
+    useEffect(() => {
+      setData({
+        slovo: slovo,
+        tekst: recenica,
+        primjer: primjer
+      })
+    }, [slovo, recenica, primjer])
+    
 
 
     

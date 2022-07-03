@@ -5,15 +5,16 @@ import TextBox from '../inputs/TextBox'
 import TextArea from '../inputs/TextArea'
 
 
-export default function NadopuniIzbor() {
+export default function NadopuniIzbor({value, setValue}) {
 
-  const [naslov, setNaslov] = useState('')
-  const [tekst, setTekst] = useState('')
+  const [naslov, setNaslov] = useState(value ? value.naslov : '')
+  const [tekst, setTekst] = useState(value ? value.tekst : '')
 
-  const [receniceList, setreceniceList] = useState([])
+  const [receniceList, setreceniceList] = useState(value ? value.pitanja : [])
   const [receniceListIndex, setreceniceListIndex] = useState(0)
 
   function onAddRecenica(){
+    console.log(receniceList)
     setreceniceList(receniceList.concat(receniceListIndex))
     setreceniceListIndex(receniceListIndex+1)
   }
@@ -22,6 +23,9 @@ export default function NadopuniIzbor() {
     setreceniceList(zadatci => zadatci.filter((item, _) => item !== i))
   }
   
+
+  
+
   return (
     <>
       
@@ -33,7 +37,15 @@ export default function NadopuniIzbor() {
       <p className='napomena'>NAPOMENA: Zamijeni npr. (19)____ sa <span className='bold'> %%19%%</span></p>
       <br />
 
-      {receniceList.map((item, i)=> {return <Recenice key={item} index={item} removeOsoba={onRemoveRecenica} />})}
+      {receniceList.map((item, i)=> {
+        return <Recenice 
+          key={i} 
+          index={i} 
+          removeOsoba={onRemoveRecenica} 
+          slovo_db={item.slovo}
+          recenica_db={item.recenica}
+          primjer_db={item.primjer}
+        />})}
 
       <Button 
           variant="danger" 

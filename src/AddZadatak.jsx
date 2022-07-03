@@ -10,31 +10,56 @@ import BrojZadatka from './inputs/BrojZadatka'
 import BrojBodova from './inputs/BrojBodova'
 import CheckBox from './inputs/CheckBox'
 import FileInput from './inputs/FileInput'
+import { getZadatakVrstaList } from './ServerFunctions'
+import { getKeyByValue } from './ServerFunctions'
 
 
-export default function AddZadatak({removeZadatak, index, nadzadatak}) {
+
+export default function AddZadatak({removeZadatak, id, index, nadzadatak, vrsta_id, matura_id, broj_zadatka, zadatak_tekst, slika_path, broj_bodova, primjer_bool}) {
 
   
   
 
     
-    const vrstaOptions = ['zaokruzivanje', 'kratki odgovor', 'dugi odgovor']
     const [vrsta, setVrsta] = useState('')
-    const [zadatakBroj, setZadatakBroj] = useState(0)
-    const [zadatakTekst, setZadatakTekst] = useState({})
-    const [brojBodova, setBrojBodova] = useState(0)
+    const [vrstaOptions, setvrstaOptions] = useState([])
+    const [zadatakVrstaList, setZadatakVrstaList] = useState({})
+    const [zadatakBroj, setZadatakBroj] = useState(broj_zadatka ? broj_zadatka : 0)
+    const [zadatakTekst, setZadatakTekst] = useState(zadatak_tekst ? zadatak_tekst : {})
+    const [brojBodova, setBrojBodova] = useState(broj_bodova ? broj_bodova : 0)
     const [slika, setSlika] = useState('')
-    const [primjer, setPrimjer] = useState(false)
+    const [primjer, setPrimjer] = useState(primjer_bool ? primjer_bool : false)
+
+    // useEffect(() => {
+    //   setZadatakBroj(0)
+    //   setZadatakTekst('')
+    //   setBrojBodova(0)
+    //   setSlika('')
+    //   setPrimjer(false)
+
+    
+    // }, [vrsta, nadzadatak])
+
+    useEffect(()=>{
+      if (id){
+        setVrsta(getKeyByValue(zadatakVrstaList, vrsta_id))
+      }
+    }, [zadatakVrstaList])
 
     useEffect(() => {
-      setZadatakBroj(0)
-      setZadatakTekst('')
-      setBrojBodova(0)
-      setSlika('')
-      setPrimjer(false)
+      
+      getZadatakVrstaList()
+        .then(data => {
+          setZadatakVrstaList(data)
+          setvrstaOptions(Object.keys(data))
+
+        })
+    
+
+     }, [])
+
 
     
-    }, [vrsta, nadzadatak])
     
     
 
@@ -73,33 +98,34 @@ export default function AddZadatak({removeZadatak, index, nadzadatak}) {
 
   const formatOptions = {
     'zaokruzivanje': [
-      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
-      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
-      <ZaokruzivanjeForm setValue={setZadatakTekst}></ZaokruzivanjeForm>,
-      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} />
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} key={0} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} key={1} />,
+      <ZaokruzivanjeForm value={zadatakTekst} setValue={setZadatakTekst} key={2} />,
+      <CheckBox title='Je li primjer?' value={primjer} setValue={setPrimjer} />,
+      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} key={3} />
     ],
     'kratki odgovor': [
       <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
       <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
-      <KratkiOdgovorForm setValue={setZadatakTekst} />,
+      <KratkiOdgovorForm value={zadatakTekst} setValue={setZadatakTekst} />,
       <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} />
     ],
     'dugi odgovor': [
       <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
       <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
-      <DugiOdgovorForm setValue={setZadatakTekst} />,
+      <DugiOdgovorForm value={zadatakTekst} setValue={setZadatakTekst} />,
       <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} />
     ],
     'tekst i zaokruzivanje': [
       <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
       <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
-      <ZaokruzivanjeForm setValue={setZadatakTekst}></ZaokruzivanjeForm>,
+      <ZaokruzivanjeForm value={zadatakTekst} setValue={setZadatakTekst} />,
       <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} />
     ],
     'povezivanje tekstovi': [
       <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
       <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
-      <KratkiOdgovorForm setValue={setZadatakTekst} />,
+      <KratkiOdgovorForm value={zadatakTekst} setValue={setZadatakTekst} />,
       <CheckBox title='Je li primjer?' value={primjer} setValue={setPrimjer} />,
     ],
     'nadopuni izbor': [

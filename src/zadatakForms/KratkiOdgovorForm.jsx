@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import TextBox from '../inputs/TextBox'
 
-export default function KratkiOdgovorForm({setValue}) {
+export default function KratkiOdgovorForm({value, setValue}) {
 
-    const [tekst, setTekst] = useState('')
+    const [tekst, setTekst] = useState(value ? value.tekst : '')
 
     useEffect(() => {
       

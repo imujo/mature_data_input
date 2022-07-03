@@ -10,31 +10,53 @@ import AddZadatak from './AddZadatak'
 import VrstaZadatka from './inputs/VrstaZadatka'
 import BrojZadatka from './inputs/BrojZadatka'
 import FileInput from './inputs/FileInput'
+import { getNadzadatakVrstaList } from './ServerFunctions'
+import { getKeyByValue } from './ServerFunctions'
 
 
-export default function AddNadzadatak({index, removeZadatak}) {
+export default function AddNadzadatak({index, removeZadatak, id, vrsta_id, broj_nadzadatka, nadzadatak_tekst, slika_path, audio_path, zadatci}) {
 
     const [vrsta, setVrsta] = useState('')
-    const vrstaOptions = ['tekst i zaokruzivanje', 'povezivanje tekstovi', 'nadopuni izbor', 'nadopuni slobodno', 'povezivanje']
+    const [nadzadatakVrstaList, setNadzadatakVrstaList] = useState({})
+    const [vrstaOptions, setVrstaOptions] = useState([])
 
-    const [nadzadatakBroj, setNadzadatakBroj] = useState(0)
-    const [slika, setSlika] = useState('')
-    const [audio, setAudio] = useState('')
+    const [nadzadatakBroj, setNadzadatakBroj] = useState(broj_nadzadatka ? broj_nadzadatka : 0)
+    const [slika, setSlika] = useState(slika_path ? slika_path : '')
+    const [audio, setAudio] = useState(audio_path ? audio_path : '')
+    const [tekst, setTekst] = useState(nadzadatak_tekst ? nadzadatak_tekst : {})
 
 
     function submit(e){
         e.preventDefault()
     }
 
-    useEffect(() => {
-      setNadzadatakBroj(0)
-      setSlika('')
-      setAudio('')
+    // useEffect(() => {
+    //   setNadzadatakBroj(0)
+    //   setSlika('')
+    //   setAudio('')
 
-    }, [vrsta])
+    // }, [vrsta])
+
+    useEffect(()=>{
+        if (id){
+          setVrsta(getKeyByValue(nadzadatakVrstaList, vrsta_id))
+        }
+      }, [nadzadatakVrstaList])
+
+    useEffect(() => {
+      
+        getNadzadatakVrstaList()
+          .then(data => {
+            setNadzadatakVrstaList(data)
+            setVrstaOptions(Object.keys(data))
+  
+          })
+      
+  
+       }, [])
     
 
-    const [zadatciList, setZadatciList] = useState([])
+    const [zadatciList, setZadatciList] = useState(zadatci ? zadatci : [])
      const [zadatciListIndex, setZadatciListIndex] = useState(0)
 
 
@@ -77,32 +99,47 @@ export default function AddNadzadatak({index, removeZadatak}) {
                 <h2>Tekst</h2>
                 {   
                     vrsta === 'tekst i zaokruzivanje' ? 
-                        <TekstIZaokruzivanje /> : null
+                        <TekstIZaokruzivanje value={tekst} setValue={setTekst} /> : null
                 }
 
                 {
                     vrsta === 'povezivanje tekstovi' ?
-                        <PovezivanjeTekstovi /> : null
+                        <PovezivanjeTekstovi value={tekst} setValue={setTekst} /> : null
                 }
 
                 {
                     vrsta === 'nadopuni izbor' ? 
-                        <NadopuniIzbor /> : null
+                        <NadopuniIzbor value={tekst} setValue={setTekst}/> : null
                 }
 
                 {
                     vrsta === 'nadopuni slobodno' ?
-                        <NadopuniSlobodno /> : null
+                        <NadopuniSlobodno value={tekst} setValue={setTekst}/> : null
                 }
 
                 {
                     vrsta === 'povezivanje' ? 
-                        <Povezivanje /> : null
+                        <Povezivanje value={tekst} setValue={setTekst}/> : null
                 }
             </div>
         </div>
         <div className="nz_zadatciDiv">
-            {zadatciList.map((item, i)=> {return <AddZadatak key={item} index={item} removeZadatak={onRemoveZadatak} nadzadatak={vrsta} />})}
+            {zadatciList.map((item, i)=> {
+                return <AddZadatak 
+                key={item.index} 
+                index={item.index} 
+                removeZadatak={onRemoveZadatak} 
+                id={item.id}
+                vrsta_id={item.vrsta_id}
+                broj_zadatka={item.broj_zadatka}
+                zadatak_tekst={item.zadatak_tekst}
+                slika_path={item.slika_path}
+                broj_bodova={item.broj_bodova}
+                primjer_bool={item.primjer}
+                nadzadatak={vrsta}
+              />
+                
+            })}
         </div>
         <div className="nz_buttons">
             <Button 
