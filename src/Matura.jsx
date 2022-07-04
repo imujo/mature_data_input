@@ -4,22 +4,25 @@ import Button from 'react-bootstrap/Button'
 import AddZadatak from './AddZadatak'
 import AddNadzadatak from './AddNadzadatak'
 import { getMaturaId, getPredmetiList, getZadatciFromMatura } from './ServerFunctions'
+import { useSearchParams } from 'react-router-dom'
 
 
 export default function Matura() {
 
+    const [searchParams, _] = useSearchParams();
+
     const [predmetOptions, setPredmetOptions] = useState([])
     const [predmetiList, setPredmetiList] = useState([])
-    const [predmet, setPredmet] = useState('')
+    const [predmet, setPredmet] = useState(searchParams.get('predmet') ? searchParams.get('predmet') : '')
 
     const godinaOpitions = [2010, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
-    const [godina, setGodina] = useState(0)
+    const [godina, setGodina] = useState(searchParams.get('godina') ? searchParams.get('godina') : 0)
 
     const razinaOptions = ['A', 'B']
-    const [razina, setRazina] = useState('')
+    const [razina, setRazina] = useState(searchParams.get('razina') ? searchParams.get('razina') : '')
 
     const sezonaOptions = ['ljeto', 'jesen']
-    const [sezona, setSezona] = useState('')
+    const [sezona, setSezona] = useState(searchParams.get('sezona') ? searchParams.get('sezona') : '')
     
     const [matura, setMatura] = useState('')
     const [maturaId, setMaturaId] = useState(0)
@@ -98,8 +101,7 @@ export default function Matura() {
         {zadatciList.map((item, i)=> {
           if (item.type === 'zadatak'){
             return <AddZadatak 
-              key={item.index} 
-              index={item.index} 
+              key={i} 
               removeZadatak={onRemoveZadatak} 
               id={item.id}
               vrsta_id={item.vrsta_id}
@@ -108,11 +110,11 @@ export default function Matura() {
               slika_path={item.slika_path}
               broj_bodova={item.broj_bodova}
               primjer_bool={item.primjer}
+              rjesenja_db={item.rjesenja}
             />
           }else if (item.type === 'nadzadatak'){
             return <AddNadzadatak 
-              key={item.index} 
-              index={item.index} 
+              key={i} 
               removeZadatak={onRemoveZadatak}
               id={item.id}
               vrsta_id={item.vrsta_id}

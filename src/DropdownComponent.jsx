@@ -19,7 +19,7 @@ export default function DropdownComponent({options, option, setOption, optionNam
     
 
   return (
-    <DropdownButton id="dropdown-basic-button" title={title} disabled={disabled}>
+    <DropdownButton id="dropdown-basic-button" title={title ? title : ''} disabled={disabled}>
         {
             options.map((m, i) => {
                 return (

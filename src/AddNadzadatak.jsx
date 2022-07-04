@@ -126,8 +126,7 @@ export default function AddNadzadatak({index, removeZadatak, id, vrsta_id, broj_
         <div className="nz_zadatciDiv">
             {zadatciList.map((item, i)=> {
                 return <AddZadatak 
-                key={item.index} 
-                index={item.index} 
+                key={i} 
                 removeZadatak={onRemoveZadatak} 
                 id={item.id}
                 vrsta_id={item.vrsta_id}
@@ -137,6 +136,7 @@ export default function AddNadzadatak({index, removeZadatak, id, vrsta_id, broj_
                 broj_bodova={item.broj_bodova}
                 primjer_bool={item.primjer}
                 nadzadatak={vrsta}
+                rjesenja_db={item.rjesenja}
               />
                 
             })}

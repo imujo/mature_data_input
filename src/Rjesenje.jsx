@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import Form from 'react-bootstrap/Form'
+import React, {  useState } from 'react'
 import Slovo from './inputs/Slovo'
 import TextBox from './inputs/TextBox'
 import CheckBox from './inputs/CheckBox'
@@ -7,64 +6,64 @@ import BrojBodova from './inputs/BrojBodova'
 import FileInput from './inputs/FileInput'
 
 
-export default function Rjesenje({index, removeRjesenje, vrsta, nadzadatak}) {
+export default function Rjesenje({index, removeRjesenje, vrsta, nadzadatak, rjesenje_tekst_db, slovo_db, tocno_db, slika_path_db, broj_bodova_db}) {
 
-  const [slovo, setSlovo] = useState('')
-  const [tekst, setTekst] = useState('')
-  const [tocno, setTocno] = useState(false)
-  const [brojBodova, setBrojBodova] = useState(0)
-  const [slika, setSlika] = useState('')
+  const [slovo, setSlovo] = useState(slovo_db ? slovo_db : '')
+  const [tekst, setTekst] = useState(rjesenje_tekst_db ? rjesenje_tekst_db : '')
+  const [tocno, setTocno] = useState(tocno_db ? tocno_db : false)
+  const [brojBodova, setBrojBodova] = useState(broj_bodova_db ? broj_bodova_db : 0)
+  const [slika, setSlika] = useState(slika_path_db ? slika_path_db : '')
 
-  useEffect(() => {
-    setSlovo('')
-    setTekst('')
-    setTocno(false)
-    setBrojBodova(0)
-    setSlika('')
+  // useEffect(() => {
+  //   setSlovo('')
+  //   setTekst('')
+  //   setTocno(false)
+  //   setBrojBodova(0)
+  //   setSlika('')
     
-  }, [vrsta, nadzadatak])
+  // }, [vrsta, nadzadatak])
   
 
 
   const formatOptions = {
     'zaokruzivanje': [
-      <Slovo title="Slovo" value={slovo} setValue={setSlovo} />,
-      <TextBox title="Tekst rjesenja" value={tekst} setValue={setTekst} />,
-      <CheckBox title={'Je li tocno?'} value={tocno} setValue={setTocno} />,
-      <FileInput type="image/jpeg, image/png" title="Slika" value={slika} setValue={setSlika} />
+      <Slovo title="Slovo" value={slovo} setValue={setSlovo} key={1} />,
+      <TextBox title="Tekst rjesenja" value={tekst} setValue={setTekst} key={2} />,
+      <CheckBox title={'Je li tocno?'} value={tocno} setValue={setTocno} key={3} />,
+      <FileInput type="image/jpeg, image/png" title="Slika" value={slika} setValue={setSlika} key={4} />
     ],
     'kratki odgovor': [
-      <TextBox title="Tekst rjesenja" value={tekst} setValue={setTekst} />
+      <TextBox title="Tekst rjesenja" value={tekst} setValue={setTekst} key={1} />
     ],
     'dugi odgovor': [
-      <TextBox title="Tekst rjesenja" value={tekst} setValue={setTekst} />,
-      <BrojBodova title='Broj bodova' value={brojBodova} setValue={setBrojBodova} />,
-      <FileInput type="image/jpeg, image/png" title="Slika" value={slika} setValue={setSlika} />
+      <TextBox title="Tekst rjesenja" value={tekst} setValue={setTekst} key={1} />,
+      <BrojBodova title='Broj bodova' value={brojBodova} setValue={setBrojBodova} key={2} />,
+      <FileInput type="image/jpeg, image/png" title="Slika" value={slika} setValue={setSlika} key={3} />
     ],
     'tekst i zaokruzivanje': [
-      <Slovo title="Slovo" value={slovo} setValue={setSlovo} />,
-      <TextBox title="Tekst rjesenja" value={tekst} setValue={setTekst} />,
-      <CheckBox title={'Je li tocno?'} value={tocno} setValue={setTocno} />,
-      <FileInput type="image/jpeg, image/png" title="Slika" value={slika} setValue={setSlika} />
+      <Slovo title="Slovo" value={slovo} setValue={setSlovo} key={1} />,
+      <TextBox title="Tekst rjesenja" value={tekst} setValue={setTekst} key={2} />,
+      <CheckBox title={'Je li tocno?'} value={tocno} setValue={setTocno} key={3} />,
+      <FileInput type="image/jpeg, image/png" title="Slika" value={slika} setValue={setSlika} key={4} />
     ],
     'povezivanje tekstovi': [
-      <Slovo title="Slovo" value={slovo} setValue={setSlovo} />
+      <Slovo title="Slovo" value={slovo} setValue={setSlovo} key={1} />
     ],
     'nadopuni izbor': [
-      <Slovo title="Slovo" value={slovo} setValue={setSlovo} />
+      <Slovo title="Slovo" value={slovo} setValue={setSlovo} key={1} />
     ],
     'nadopuni slobodno': [
-      <TextBox title="Tekst rjesenja" value={tekst} setValue={setTekst} />
+      <TextBox title="Tekst rjesenja" value={tekst} setValue={setTekst} key={1} />
     ],
     'povezivanje': [
-      <Slovo title="Slovo" value={slovo} setValue={setSlovo} />
+      <Slovo title="Slovo" value={slovo} setValue={setSlovo} key={1} />
     ],
     
 
   }
 
   return (
-    <Form className='rjesenjeDiv border_bottom'>
+    <div className='rjesenjeDiv border_bottom'>
         <button className="close close_rjesenje" onClick={()=>removeRjesenje(index)}>x</button>
 
 
@@ -76,6 +75,6 @@ export default function Rjesenje({index, removeRjesenje, vrsta, nadzadatak}) {
 
         
 
-    </Form>
+    </div>
   )
 }

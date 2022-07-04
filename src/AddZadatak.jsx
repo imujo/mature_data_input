@@ -15,7 +15,7 @@ import { getKeyByValue } from './ServerFunctions'
 
 
 
-export default function AddZadatak({removeZadatak, id, index, nadzadatak, vrsta_id, matura_id, broj_zadatka, zadatak_tekst, slika_path, broj_bodova, primjer_bool}) {
+export default function AddZadatak({removeZadatak, id, index, nadzadatak, vrsta_id, broj_zadatka, zadatak_tekst, slika_path, broj_bodova, primjer_bool, rjesenja_db}) {
 
   
   
@@ -65,7 +65,7 @@ export default function AddZadatak({removeZadatak, id, index, nadzadatak, vrsta_
 
 
 
-     const [rjesenjeList, setrjesenjeList] = useState([])
+     const [rjesenjeList, setrjesenjeList] = useState(rjesenja_db ? rjesenja_db : [])
      const [rjesenjeListIndex, setrjesenjeListIndex] = useState(0)
 
 
@@ -101,44 +101,44 @@ export default function AddZadatak({removeZadatak, id, index, nadzadatak, vrsta_
       <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} key={0} />,
       <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} key={1} />,
       <ZaokruzivanjeForm value={zadatakTekst} setValue={setZadatakTekst} key={2} />,
-      <CheckBox title='Je li primjer?' value={primjer} setValue={setPrimjer} />,
+      <CheckBox title='Je li primjer?' value={primjer} setValue={setPrimjer} key={4} />,
       <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} key={3} />
     ],
     'kratki odgovor': [
-      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
-      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
-      <KratkiOdgovorForm value={zadatakTekst} setValue={setZadatakTekst} />,
-      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} />
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} key={0} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} key={1} />,
+      <KratkiOdgovorForm value={zadatakTekst} setValue={setZadatakTekst} key={2} />,
+      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} key={3} />
     ],
     'dugi odgovor': [
-      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
-      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
-      <DugiOdgovorForm value={zadatakTekst} setValue={setZadatakTekst} />,
-      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} />
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} key={1} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} key={2} />,
+      <DugiOdgovorForm value={zadatakTekst} setValue={setZadatakTekst} key={3} />,
+      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} key={4} />
     ],
     'tekst i zaokruzivanje': [
-      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
-      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
-      <ZaokruzivanjeForm value={zadatakTekst} setValue={setZadatakTekst} />,
-      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} />
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} key={1} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} key={2} />,
+      <ZaokruzivanjeForm value={zadatakTekst} setValue={setZadatakTekst} key={3} />,
+      <FileInput title={"Slika"} type="image/jpeg, image/png"  value={slika} setValue={setSlika} key={4} />
     ],
     'povezivanje tekstovi': [
-      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
-      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
-      <KratkiOdgovorForm value={zadatakTekst} setValue={setZadatakTekst} />,
-      <CheckBox title='Je li primjer?' value={primjer} setValue={setPrimjer} />,
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} key={1} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} key={2} />,
+      <KratkiOdgovorForm value={zadatakTekst} setValue={setZadatakTekst} key={3} />,
+      <CheckBox title='Je li primjer?' value={primjer} setValue={setPrimjer} key={4} />,
     ],
     'nadopuni izbor': [
-      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
-      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} key={1} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} key={2} />,
     ],
     'nadopuni slobodno': [
-      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
-      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} key={1} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} key={2} />,
     ],
     'povezivanje': [
-      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} />,
-      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} />,
+      <BrojZadatka title='Broj zadatka'  zadatakBroj={zadatakBroj} setZadatakBroj={setZadatakBroj} key={1} />,
+      <BrojBodova   brojBodova={brojBodova} setBrojBodova={setBrojBodova} key={2} />,
     ],
   }
     
@@ -165,8 +165,18 @@ export default function AddZadatak({removeZadatak, id, index, nadzadatak, vrsta_
 
         <div className="rjesenje">
           <h2>Rjesenje</h2>
-          {rjesenjeList.map((item, i)=> {return <Rjesenje key={item} index={item} removeRjesenje={onRemoveRjesenje} vrsta={vrsta
-          } nadzadatak={nadzadatak} />})}
+          {rjesenjeList.map((item, i)=> {
+            return <Rjesenje 
+              key={i} 
+              removeRjesenje={onRemoveRjesenje} 
+              vrsta={vrsta} 
+              nadzadatak={nadzadatak}
+              rjesenje_tekst_db={item.rjesenje_tekst}
+              slovo_db={item.slovo}
+              tocno_db={item.tocno}
+              slika_path_db={item.slika_path}
+              broj_bodova_db={item.broj_bodova}
+          />})}
 
           <Button 
           variant="danger" 
