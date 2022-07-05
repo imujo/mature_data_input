@@ -4,8 +4,8 @@ import TextBox from '../inputs/TextBox'
 
 export default function ZaokruzivanjeForm({value, setValue}) {
 
-  const [tekst, setTekst] = useState(value ? value.tekst : '')
-  const [citat, setCitat] = useState(value ? value.citat : '')
+  const [tekst, setTekst] = useState(Object.keys(value).length ? value.tekst : '')
+  const [citat, setCitat] = useState(Object.keys(value).length ? value.citat : '')
 
 
   useEffect(() => {

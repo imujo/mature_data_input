@@ -7,14 +7,13 @@ import TextArea from '../inputs/TextArea'
 
 export default function NadopuniIzbor({value, setValue}) {
 
-  const [naslov, setNaslov] = useState(value ? value.naslov : '')
-  const [tekst, setTekst] = useState(value ? value.tekst : '')
+  const [naslov, setNaslov] = useState(Object.keys(value).length ? value.naslov : '')
+  const [tekst, setTekst] = useState(Object.keys(value).length ? value.tekst : '')
 
-  const [receniceList, setreceniceList] = useState(value ? value.pitanja : [])
+  const [receniceList, setreceniceList] = useState(Object.keys(value).length ? value.pitanja : [])
   const [receniceListIndex, setreceniceListIndex] = useState(0)
 
   function onAddRecenica(){
-    console.log(receniceList)
     setreceniceList(receniceList.concat(receniceListIndex))
     setreceniceListIndex(receniceListIndex+1)
   }
