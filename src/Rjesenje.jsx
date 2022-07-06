@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Slovo from "./inputs/Slovo";
 import TextBox from "./inputs/TextBox";
 import CheckBox from "./inputs/CheckBox";
 import BrojBodova from "./inputs/BrojBodova";
 import FileInput from "./inputs/FileInput";
-import { deleteRjesenje } from "./ServerFunctions";
+import { deleteRjesenje, updateRjesenje } from "./ServerFunctions";
+import { Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 export default function Rjesenje({
   rjesenje_id,
@@ -16,8 +18,8 @@ export default function Rjesenje({
   slika_path_db,
   broj_bodova_db,
   updateRjesenja,
-  setRjesenjeList,
-  rjesenjeList,
+  submitChildForm,
+  index,
 }) {
   const [slovo, setSlovo] = useState(slovo_db ? slovo_db : "");
   const [tekst, setTekst] = useState(
@@ -29,21 +31,16 @@ export default function Rjesenje({
   );
   const [slika, setSlika] = useState(slika_path_db ? slika_path_db : "");
 
-  const submit = () => {
-    setRjesenjeList(
-      rjesenjeList.concat({
-        rjesenje_tekst: tekst,
-        slovo: slovo,
-        tocno: tocno,
-        slika_path: slika,
-        broj_bodova: brojBodova,
-      })
-    );
-  };
-
   const del = async () => {
     await deleteRjesenje(rjesenje_id);
     updateRjesenja();
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    console.log("Submit rjesenje");
+
+    updateRjesenje(rjesenje_id, tekst, slika, slovo, tocno, brojBodova, index);
   };
 
   const formatOptions = {
@@ -140,12 +137,22 @@ export default function Rjesenje({
   };
 
   return (
-    <div className="rjesenjeDiv border_bottom">
+    <Form className="rjesenjeDiv border_bottom" onSubmit={submit}>
       <button className="close close_rjesenje" onClick={del}>
         x
       </button>
 
       {formatOptions[nadzadatak ? nadzadatak : vrsta]}
-    </div>
+
+      <Button
+        ref={submitChildForm}
+        variant="danger"
+        className="z_submit"
+        type="submit"
+        style={{ display: "none" }}
+      >
+        Submit
+      </Button>
+    </Form>
   );
 }

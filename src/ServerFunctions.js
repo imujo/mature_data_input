@@ -201,11 +201,11 @@ export const updateZadatak = (
     matura_id: matura_id,
     broj_zadatka: broj_zadatka,
     zadatak_tekst: zadatak_tekst,
-    slika_path: slika_path,
     broj_bodova: broj_bodova,
     primjer: primjer,
     rjesenjaList: rjesenjaList,
   };
+  console.log(slika_path);
 
   return fetch(`${server_url}/zadatak`, {
     method: "PUT",
@@ -229,22 +229,21 @@ export const updateZadatak = (
 
 export const updateRjesenje = (
   rjesenje_id,
-  matura_id,
   rjesenje_tekst,
-  zadatak_id,
   slika_path,
   slovo,
   tocno,
-  broj_bodova
+  broj_bodova,
+  index
 ) => {
   const data = {
-    matura_id: matura_id,
+    rjesenje_id: rjesenje_id,
     rjesenje_tekst: rjesenje_tekst,
-    zadatak_id: zadatak_id,
     slovo: slovo,
     tocno: tocno,
     slika_path: slika_path,
     broj_bodova: broj_bodova,
+    index: index,
   };
 
   return fetch(`${server_url}/rjesenje?=${rjesenje_id}`, {
@@ -267,6 +266,25 @@ export const updateRjesenje = (
     });
 };
 
+export const lock = (id, type) => {
+  return fetch(`${server_url}/lock?id=${id}&table=${type}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Couldnt update lock");
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((err) => {
+      alert(err);
+      return null;
+    });
+};
 // POST FUNCTIONS
 
 export const postZadatak = (
@@ -284,7 +302,6 @@ export const postZadatak = (
     matura_id: matura_id,
     broj_zadatka: broj_zadatka,
     zadatak_tekst: zadatak_tekst,
-    slika_path: slika_path,
     nadzadatak_id: nadzadatak_id,
     broj_bodova: broj_bodova,
     primjer: primjer,
@@ -388,29 +405,11 @@ export const postRjesenje = (
 
 // DEL FUNCTIONS
 
-export const del = (type, id) => {
-  if (window.confirm(`Jesi li siguran da zelis izbrisat ${type}?`)) {
-    return fetch(`${server_url}/delete?id=${id}&type=${type}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Couldnt delete");
-      })
-      .then((data) => {
-        return true;
-      })
-      .catch((err) => {
-        alert(err);
-        return false;
-      });
-  }
-};
-
-export const deleteRjesenje = (rjesenje_id) => {
-  if (window.confirm(`Jesi li siguran da zelis izbrisat rjesenje?`)) {
+export const deleteRjesenje = (rjesenje_id, prompt = true) => {
+  if (
+    !prompt ||
+    window.confirm(`Jesi li siguran da zelis izbrisat rjesenje?`)
+  ) {
     return fetch(`${server_url}/rjesenje?rjesenje_id=${rjesenje_id}`, {
       method: "DELETE",
     })
@@ -430,8 +429,8 @@ export const deleteRjesenje = (rjesenje_id) => {
   }
 };
 
-export const deleteZadatak = async (zadatak_id) => {
-  if (window.confirm(`Jesi li siguran da zelis izbrisat zadatak?`)) {
+export const deleteZadatak = async (zadatak_id, prompt = true) => {
+  if (!prompt || window.confirm(`Jesi li siguran da zelis izbrisat zadatak?`)) {
     return fetch(`${server_url}/zadatak?zadatak_id=${zadatak_id}`, {
       method: "DELETE",
     })

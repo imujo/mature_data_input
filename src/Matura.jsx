@@ -141,6 +141,7 @@ export default function Matura() {
               primjer_bool={item.primjer}
               matura_id={maturaId}
               updateZadatci={updateZadatci}
+              locked={item.islocked}
             />
           );
         } else if (item.type === "nadzadatak") {
@@ -154,6 +155,7 @@ export default function Matura() {
               slika_path={item.slika_path}
               audio_path={item.audio_path}
               matura_id={maturaId}
+              locked={item.islocked}
               updateZadatci={updateZadatci}
             />
           );

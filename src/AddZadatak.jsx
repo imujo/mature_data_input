@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import ZaokruzivanjeForm from "./zadatakForms/ZaokruzivanjeForm";
 import Button from "react-bootstrap/Button";
@@ -16,8 +16,11 @@ import {
   postRjesenje,
   getRjesenja,
   deleteZadatak,
+  lock,
+  deleteRjesenje,
 } from "./ServerFunctions";
 import { getKeyByValue } from "./ServerFunctions";
+import axios from "axios";
 
 export default function AddZadatak({
   zadatak_id,
@@ -33,6 +36,7 @@ export default function AddZadatak({
   updateZadatci,
   notDeletable,
   zIndex = 0,
+  locked,
 }) {
   // VRSTA STATE
   const [vrsta, setVrsta] = useState("Odredi vrstu");
@@ -47,11 +51,8 @@ export default function AddZadatak({
     zadatak_tekst ? zadatak_tekst : {}
   );
   const [brojBodova, setBrojBodova] = useState(broj_bodova ? broj_bodova : 0);
-  const [slika, setSlika] = useState("");
+  const [slika, setSlika] = useState(slika_path ? slika_path : "");
   const [primjer, setPrimjer] = useState(primjer_bool ? primjer_bool : false);
-
-  // LOCKED
-  const [locked, setLocked] = useState(false);
 
   // SET VRSTA
   useEffect(() => {
@@ -67,9 +68,7 @@ export default function AddZadatak({
       setvrstaOptions(Object.keys(data));
     });
 
-    if (vrsta_id) {
-      setLocked(true);
-    }
+    updateRjesenja();
   }, []);
 
   // RJESENJA
@@ -91,7 +90,11 @@ export default function AddZadatak({
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    await updateZadatak(
+    for (let reff of elRefs) {
+      reff.current.click();
+    }
+
+    updateZadatak(
       zadatak_id,
       zadatakVrstaList[vrsta],
       matura_id,
@@ -99,13 +102,13 @@ export default function AddZadatak({
       zadatakTekst,
       slika,
       brojBodova,
-      primjer,
-      rjesenjeList
-    );
+      primjer
+    ).then(() => lock(zadatak_id, "zadatak").then(() => updateZadatci()));
 
-    setLocked(true);
+    axios.post("http://localhost:3001/image-upload", slika).then((res) => {
+      console.log("Axios response: ", res);
+    });
   };
-
   // CHILDREN
   const formatOptions = {
     zaokruzivanje: [
@@ -250,16 +253,53 @@ export default function AddZadatak({
   // UNLOCK
   const unlock = () => {
     if (window.confirm("Zelis li otkljucat zadatak?")) {
-      setLocked(false);
+      lock(zadatak_id, "zadatak").then(() => updateZadatci());
     }
   };
 
+  // DELETE ZADATAK
   const delZadatak = () => {
     deleteZadatak(zadatak_id).then(() => updateZadatci());
   };
 
+  const arrLength = rjesenjeList.length;
+  const [elRefs, setElRefs] = React.useState([]);
+
+  React.useEffect(() => {
+    // add or remove refs
+    setElRefs((elRefs) =>
+      Array(arrLength)
+        .fill()
+        .map((_, i) => elRefs[i] || createRef())
+    );
+  }, [arrLength]);
+
+  // CLEAR DATA
+  const clearData = () => {
+    setZadatakBroj(0);
+    setZadatakTekst({});
+    setSlika("");
+    setBrojBodova(0);
+    setPrimjer(false);
+
+    updateZadatak(
+      zadatak_id,
+      zadatakVrstaList[vrsta],
+      matura_id,
+      zadatakBroj,
+      zadatakTekst,
+      slika,
+      brojBodova,
+      primjer
+    ).then(() => updateZadatci());
+
+    for (let rjesenje of rjesenjeList) {
+      deleteRjesenje(rjesenje.id, false).then(() => updateRjesenja());
+    }
+  };
+
   return (
-    <Form className="zadatakDiv" onSubmit={onSubmit} style={{ zIndex: zIndex }}>
+    <div className="zadatakDiv" style={{ zIndex: zIndex }}>
       <div className={`lock ${locked ? "locked" : ""}`} onClick={unlock}></div>
       <div className="z_form">
         {notDeletable ? null : (
@@ -267,7 +307,7 @@ export default function AddZadatak({
             x
           </button>
         )}
-        <div className="zadatak">
+        <Form className="zadatak">
           <h2>Zadatak {zadatakBroj}</h2>
 
           {nadzadatak ? null : (
@@ -275,17 +315,20 @@ export default function AddZadatak({
               vrstaOptions={vrstaOptions}
               vrsta={vrsta}
               setVrsta={setVrsta}
+              clearData={clearData}
             />
           )}
           {formatOptions[nadzadatak ? nadzadatak : vrsta]}
-        </div>
+        </Form>
 
         <div className="rjesenje">
           <h2>Rjesenje</h2>
           {rjesenjeList.map((item, i) => {
             return (
               <Rjesenje
+                submitChildForm={elRefs[i]}
                 key={i}
+                index={i}
                 rjesenje_id={item.id}
                 vrsta={vrsta}
                 nadzadatak={nadzadatak}
@@ -295,8 +338,6 @@ export default function AddZadatak({
                 slika_path_db={item.slika_path}
                 broj_bodova_db={item.broj_bodova}
                 updateRjesenja={updateRjesenja}
-                setRjesenjeList={setRjesenjeList}
-                rjesenjeList={rjesenjeList}
               />
             );
           })}
@@ -311,10 +352,10 @@ export default function AddZadatak({
         </div>
       </div>
       <div className="z_submitDiv">
-        <Button variant="danger" type="submit" className="z_submit">
+        <Button variant="danger" className="z_submit" onClick={onSubmit}>
           Submit
         </Button>
       </div>
-    </Form>
+    </div>
   );
 }

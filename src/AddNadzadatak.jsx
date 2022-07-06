@@ -12,8 +12,10 @@ import BrojZadatka from "./inputs/BrojZadatka";
 import FileInput from "./inputs/FileInput";
 import {
   deleteNadzadatak,
+  deleteZadatak,
   getNadzadatakVrstaList,
   getNadzadatakZadatci,
+  lock,
   postZadatak,
   updateNadzadatak,
 } from "./ServerFunctions";
@@ -28,6 +30,7 @@ export default function AddNadzadatak({
   slika_path,
   audio_path,
   updateZadatci,
+  locked,
 }) {
   // VRSTA STATE
   const [vrsta, setVrsta] = useState("Odredi vrstu");
@@ -42,12 +45,10 @@ export default function AddNadzadatak({
   const [audio, setAudio] = useState(audio_path ? audio_path : "");
   const [tekst, setTekst] = useState(nadzadatak_tekst ? nadzadatak_tekst : {});
 
-  const [locked, setLocked] = useState(false);
-
   // SUBMIT
   function submit(e) {
     e.preventDefault();
-
+    console.log("submited");
     updateNadzadatak(
       nadzadatak_id,
       nadzadatakVrstaList[vrsta],
@@ -55,8 +56,7 @@ export default function AddNadzadatak({
       tekst,
       slika,
       audio
-    );
-    setLocked(true);
+    ).then(() => lock(nadzadatak_id, "nadzadatak").then(() => updateZadatci()));
   }
 
   // GET VRSTA
@@ -85,10 +85,6 @@ export default function AddNadzadatak({
 
   useEffect(() => {
     updateNadzadatakZadatci();
-
-    if (vrsta_id) {
-      setLocked(true);
-    }
   }, []);
 
   function onAddZadatak() {
@@ -104,9 +100,35 @@ export default function AddNadzadatak({
   // UNLOCK
   const unlock = () => {
     if (window.confirm("Zelis li otkljucat zadatak?")) {
-      setLocked(false);
+      lock(nadzadatak_id, "nadzadatak").then(() => updateZadatci());
     }
   };
+
+  const clearData = () => {
+    setNadzadatakBroj(0);
+    setTekst({});
+    setSlika("");
+    setAudio("");
+
+    updateNadzadatak(
+      nadzadatak_id,
+      nadzadatakVrstaList[vrsta],
+      nadzadatakBroj,
+      tekst,
+      slika,
+      audio
+    ).then(() => updateZadatci());
+
+    for (let i = 1; i < zadatciList.length; i++) {
+      deleteZadatak(zadatciList[i].id, false).then(() =>
+        updateNadzadatakZadatci()
+      );
+    }
+  };
+
+  useEffect(() => {
+    console.log(tekst);
+  }, [tekst]);
 
   return (
     <div className=" nadzadatakDiv">
@@ -115,7 +137,7 @@ export default function AddNadzadatak({
         ${locked ? "locked" : ""}`}
         onClick={unlock}
       ></div>
-      <Form onSubmit={submit}>
+      <Form onSubmit={(e) => e.preventDefault()}>
         <div className="z_form">
           <div className="nadzadatak">
             <button className="close" onClick={delNadzadatak}>
@@ -127,6 +149,7 @@ export default function AddNadzadatak({
               vrstaOptions={vrstaOptions}
               vrsta={vrsta}
               setVrsta={setVrsta}
+              clearData={clearData}
             />
 
             <BrojZadatka
@@ -183,7 +206,7 @@ export default function AddNadzadatak({
         </div>
 
         <div className="z_submitDiv">
-          <Button variant="danger" type="submit" className="z_submit">
+          <Button variant="danger" onClick={submit} type="submit">
             Submit
           </Button>
         </div>
@@ -201,8 +224,12 @@ export default function AddNadzadatak({
               broj_bodova={item.broj_bodova}
               primjer_bool={item.primjer}
               matura_id={matura_id}
-              updateZadatci={updateZadatci}
+              updateZadatci={() => {
+                updateNadzadatakZadatci();
+                updateZadatci();
+              }}
               nadzadatak={vrsta}
+              locked={item.islocked}
               notDeletable={i === 0}
               zIndex={2}
             />
