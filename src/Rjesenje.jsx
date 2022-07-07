@@ -20,6 +20,7 @@ export default function Rjesenje({
   updateRjesenja,
   submitChildForm,
   index,
+  matura_id,
 }) {
   const [slovo, setSlovo] = useState(slovo_db ? slovo_db : "");
   const [tekst, setTekst] = useState(
@@ -29,7 +30,7 @@ export default function Rjesenje({
   const [brojBodova, setBrojBodova] = useState(
     broj_bodova_db ? broj_bodova_db : 0
   );
-  const [slika, setSlika] = useState(slika_path_db ? slika_path_db : "");
+  const [slika, setSlika] = useState("");
 
   const del = async () => {
     await deleteRjesenje(rjesenje_id);
@@ -40,7 +41,16 @@ export default function Rjesenje({
     e.preventDefault();
     console.log("Submit rjesenje");
 
-    updateRjesenje(rjesenje_id, tekst, slika, slovo, tocno, brojBodova, index);
+    updateRjesenje(
+      rjesenje_id,
+      tekst,
+      slika,
+      slovo,
+      tocno,
+      brojBodova,
+      index,
+      matura_id
+    );
   };
 
   const formatOptions = {
@@ -63,6 +73,11 @@ export default function Rjesenje({
         title="Slika"
         value={slika}
         setValue={setSlika}
+        filePath={slika_path_db}
+        table="rjesenje"
+        table_id={rjesenje_id}
+        updateZadatci={updateRjesenja}
+        deleteType="slika"
         key={4}
       />,
     ],
@@ -92,6 +107,11 @@ export default function Rjesenje({
         title="Slika"
         value={slika}
         setValue={setSlika}
+        filePath={slika_path_db}
+        table="rjesenje"
+        table_id={rjesenje_id}
+        updateZadatci={updateRjesenja}
+        deleteType="slika"
         key={3}
       />,
     ],
@@ -114,6 +134,11 @@ export default function Rjesenje({
         title="Slika"
         value={slika}
         setValue={setSlika}
+        filePath={slika_path_db}
+        table="rjesenje"
+        table_id={rjesenje_id}
+        updateZadatci={updateRjesenja}
+        deleteType="slika"
         key={4}
       />,
     ],

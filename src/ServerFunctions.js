@@ -1,5 +1,5 @@
+import axios from "axios";
 const server_url = "http://localhost:3001";
-
 export function getKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] === parseInt(value));
 }
@@ -152,17 +152,38 @@ export const updateNadzadatak = (
   vrsta_id,
   broj_nadzadatka,
   nadzadatak_tekst,
-  slika_path,
-  audio_path
+  slika,
+  audio,
+  matura_id
 ) => {
   let data = {
     id: nadzadatak_id,
     vrsta_id: vrsta_id,
     broj_nadzadatka: broj_nadzadatka,
     nadzadatak_tekst: nadzadatak_tekst,
-    slika_path: slika_path,
-    audio_path: audio_path,
   };
+
+  if (slika) {
+    axios
+      .post(
+        `${server_url}/file-upload?table=nadzadatak&table_id=${nadzadatak_id}&matura_id=${matura_id}&type=slika`,
+        slika
+      )
+      .then((res) => {
+        console.log("Axios response: ", res);
+      });
+  }
+
+  if (audio) {
+    axios
+      .post(
+        `${server_url}/file-upload?table=nadzadatak&table_id=${nadzadatak_id}&matura_id=${matura_id}&type=audio`,
+        audio
+      )
+      .then((res) => {
+        console.log("Axios response: ", res);
+      });
+  }
 
   return fetch(`${server_url}/nadzadatak`, {
     method: "PUT",
@@ -190,10 +211,9 @@ export const updateZadatak = (
   matura_id,
   broj_zadatka,
   zadatak_tekst,
-  slika_path,
+  slika,
   broj_bodova,
-  primjer,
-  rjesenjaList
+  primjer
 ) => {
   const data = {
     id: id,
@@ -203,9 +223,18 @@ export const updateZadatak = (
     zadatak_tekst: zadatak_tekst,
     broj_bodova: broj_bodova,
     primjer: primjer,
-    rjesenjaList: rjesenjaList,
   };
-  console.log(slika_path);
+
+  if (slika) {
+    axios
+      .post(
+        `${server_url}/file-upload?table=zadatak&table_id=${id}&matura_id=${matura_id}&type=slika`,
+        slika
+      )
+      .then((res) => {
+        console.log("Axios response: ", res);
+      });
+  }
 
   return fetch(`${server_url}/zadatak`, {
     method: "PUT",
@@ -222,7 +251,7 @@ export const updateZadatak = (
       return data;
     })
     .catch((err) => {
-      alert(err);
+      alert(err, "update zadatak");
       return null;
     });
 };
@@ -230,21 +259,32 @@ export const updateZadatak = (
 export const updateRjesenje = (
   rjesenje_id,
   rjesenje_tekst,
-  slika_path,
+  slika,
   slovo,
   tocno,
   broj_bodova,
-  index
+  index,
+  matura_id
 ) => {
   const data = {
     rjesenje_id: rjesenje_id,
     rjesenje_tekst: rjesenje_tekst,
     slovo: slovo,
     tocno: tocno,
-    slika_path: slika_path,
     broj_bodova: broj_bodova,
     index: index,
   };
+
+  if (slika) {
+    axios
+      .post(
+        `${server_url}/file-upload?table=rjesenje&table_id=${rjesenje_id}&matura_id=${matura_id}&type=slika`,
+        slika
+      )
+      .then((res) => {
+        console.log("Axios response: ", res);
+      });
+  }
 
   return fetch(`${server_url}/rjesenje?=${rjesenje_id}`, {
     method: "PUT",
@@ -414,8 +454,8 @@ export const deleteRjesenje = (rjesenje_id, prompt = true) => {
       method: "DELETE",
     })
       .then((response) => {
-        if (response.ok) {
-          return response.json();
+        if (response) {
+          return response;
         }
         throw new Error("Couldnt delete");
       })
@@ -423,7 +463,7 @@ export const deleteRjesenje = (rjesenje_id, prompt = true) => {
         return true;
       })
       .catch((err) => {
-        alert(err);
+        alert(err, "errorrr");
         return false;
       });
   }
@@ -455,6 +495,30 @@ export const deleteNadzadatak = async (nadzadatak_id) => {
     return fetch(`${server_url}/nadzadatak?nadzadatak_id=${nadzadatak_id}`, {
       method: "DELETE",
     })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Couldnt delete");
+      })
+      .then(() => {
+        return true;
+      })
+      .catch((err) => {
+        alert(err);
+        return false;
+      });
+  }
+};
+
+export const deleteFile = async (table, table_id, type) => {
+  if (window.confirm(`Jesi li siguran da zelis izbrisat datoteku?`)) {
+    return fetch(
+      `${server_url}/deleteFile?table=${table}&table_id=${table_id}&type=${type}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => {
         if (response.ok) {
           return response.json();

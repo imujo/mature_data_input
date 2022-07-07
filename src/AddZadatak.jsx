@@ -20,7 +20,6 @@ import {
   deleteRjesenje,
 } from "./ServerFunctions";
 import { getKeyByValue } from "./ServerFunctions";
-import axios from "axios";
 
 export default function AddZadatak({
   zadatak_id,
@@ -51,7 +50,7 @@ export default function AddZadatak({
     zadatak_tekst ? zadatak_tekst : {}
   );
   const [brojBodova, setBrojBodova] = useState(broj_bodova ? broj_bodova : 0);
-  const [slika, setSlika] = useState(slika_path ? slika_path : "");
+  const [slika, setSlika] = useState("");
   const [primjer, setPrimjer] = useState(primjer_bool ? primjer_bool : false);
 
   // SET VRSTA
@@ -103,11 +102,12 @@ export default function AddZadatak({
       slika,
       brojBodova,
       primjer
-    ).then(() => lock(zadatak_id, "zadatak").then(() => updateZadatci()));
-
-    axios.post("http://localhost:3001/image-upload", slika).then((res) => {
-      console.log("Axios response: ", res);
-    });
+    ).then(() =>
+      lock(zadatak_id, "zadatak").then(() => {
+        updateZadatci();
+        updateRjesenja();
+      })
+    );
   };
   // CHILDREN
   const formatOptions = {
@@ -135,6 +135,11 @@ export default function AddZadatak({
         type="image/jpeg, image/png"
         value={slika}
         setValue={setSlika}
+        filePath={slika_path}
+        table="zadatak"
+        table_id={zadatak_id}
+        updateZadatci={updateZadatci}
+        deleteType="slika"
         key={3}
       />,
     ],
@@ -156,6 +161,11 @@ export default function AddZadatak({
         type="image/jpeg, image/png"
         value={slika}
         setValue={setSlika}
+        filePath={slika_path}
+        table="zadatak"
+        table_id={zadatak_id}
+        updateZadatci={updateZadatci}
+        deleteType="slika"
         key={3}
       />,
     ],
@@ -177,6 +187,11 @@ export default function AddZadatak({
         type="image/jpeg, image/png"
         value={slika}
         setValue={setSlika}
+        filePath={slika_path}
+        table="zadatak"
+        table_id={zadatak_id}
+        updateZadatci={updateZadatci}
+        deleteType="slika"
         key={4}
       />,
     ],
@@ -198,6 +213,11 @@ export default function AddZadatak({
         type="image/jpeg, image/png"
         value={slika}
         setValue={setSlika}
+        filePath={slika_path}
+        table="zadatak"
+        table_id={zadatak_id}
+        updateZadatci={updateZadatci}
+        deleteType="slika"
         key={4}
       />,
     ],
@@ -338,6 +358,7 @@ export default function AddZadatak({
                 slika_path_db={item.slika_path}
                 broj_bodova_db={item.broj_bodova}
                 updateRjesenja={updateRjesenja}
+                matura_id={matura_id}
               />
             );
           })}

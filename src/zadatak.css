@@ -139,3 +139,7 @@ h2{
     opacity: 1;
     pointer-events: all;
 }
+
+.fileImage{
+    width: 200px;
+}

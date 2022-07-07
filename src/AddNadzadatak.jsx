@@ -41,8 +41,8 @@ export default function AddNadzadatak({
   const [nadzadatakBroj, setNadzadatakBroj] = useState(
     broj_nadzadatka ? broj_nadzadatka : 0
   );
-  const [slika, setSlika] = useState(slika_path ? slika_path : "");
-  const [audio, setAudio] = useState(audio_path ? audio_path : "");
+  const [slika, setSlika] = useState("");
+  const [audio, setAudio] = useState("");
   const [tekst, setTekst] = useState(nadzadatak_tekst ? nadzadatak_tekst : {});
 
   // SUBMIT
@@ -55,7 +55,8 @@ export default function AddNadzadatak({
       nadzadatakBroj,
       tekst,
       slika,
-      audio
+      audio,
+      matura_id
     ).then(() => lock(nadzadatak_id, "nadzadatak").then(() => updateZadatci()));
   }
 
@@ -116,7 +117,8 @@ export default function AddNadzadatak({
       nadzadatakBroj,
       tekst,
       slika,
-      audio
+      audio,
+      matura_id
     ).then(() => updateZadatci());
 
     for (let i = 1; i < zadatciList.length; i++) {
@@ -163,13 +165,23 @@ export default function AddNadzadatak({
               type="image/jpeg, image/png"
               value={slika}
               setValue={setSlika}
+              filePath={slika_path}
+              table="nadzadatak"
+              table_id={nadzadatak_id}
+              updateZadatci={updateZadatci}
+              deleteType="slika"
             />
 
             <FileInput
               title="Audio"
-              type=".mp3,audio/*"
+              type="audio/*, .wma"
               value={audio}
               setValue={setAudio}
+              filePath={audio_path}
+              table="nadzadatak"
+              table_id={nadzadatak_id}
+              updateZadatci={updateZadatci}
+              deleteType="audio"
             />
 
             {vrsta !== "" ? (
