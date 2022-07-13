@@ -1,5 +1,5 @@
 import Button from "react-bootstrap/Button";
-import React, { useState } from "react";
+import React from "react";
 import { Form } from "react-bootstrap";
 import { deleteFile } from "../ServerFunctions";
 

@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Slovo from "./inputs/Slovo";
-import TextBox from "./inputs/TextBox";
 import CheckBox from "./inputs/CheckBox";
 import BrojBodova from "./inputs/BrojBodova";
 import FileInput from "./inputs/FileInput";

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import TextArea from "../inputs/TextArea";
-import TextBox from "../inputs/TextBox";
 
 export default function ZaokruzivanjeForm({ value, setValue }) {
   const [tekst, setTekst] = useState(
