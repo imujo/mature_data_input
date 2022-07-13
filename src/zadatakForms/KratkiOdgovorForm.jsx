@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import TextBox from '../inputs/TextBox'
+import React, { useEffect, useState } from "react";
+import TextArea from "../inputs/TextArea";
+import TextBox from "../inputs/TextBox";
 
-export default function KratkiOdgovorForm({value, setValue}) {
+export default function KratkiOdgovorForm({ value, setValue }) {
+  const [tekst, setTekst] = useState(value ? value.tekst : "");
 
-    const [tekst, setTekst] = useState(value ? value.tekst : '')
+  useEffect(() => {
+    setValue({
+      tekst: tekst,
+    });
+  }, [tekst]);
 
-    useEffect(() => {
-      
-        setValue({
-            tekst: tekst
-        })
-      
-    }, [tekst])
-    
   return (
     <>
-        <TextBox title="Tekst zadatka" value={tekst} setValue={setTekst} />
+      <TextArea title="Tekst zadatka" value={tekst} setValue={setTekst} />
     </>
-  )
+  );
 }

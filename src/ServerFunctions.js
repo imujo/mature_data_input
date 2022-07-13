@@ -41,8 +41,8 @@ export const getPredmetiList = () => {
     });
 };
 
-export const getZadatakVrstaList = () => {
-  return fetch(`${server_url}/zadatak_vrsta/all`)
+export const getZadatakVrstaList = (matura_id) => {
+  return fetch(`${server_url}/zadatak_vrsta/all?matura_id=${matura_id}`)
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -58,8 +58,25 @@ export const getZadatakVrstaList = () => {
     });
 };
 
-export const getNadzadatakVrstaList = () => {
-  return fetch(`${server_url}/nadzadatak_vrsta/all`)
+export const getOdjeljakList = (matura_id) => {
+  return fetch(`${server_url}/odjeljak/all?matura_id=${matura_id}`)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("No zadatak_vrsta list found");
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((err) => {
+      alert(err);
+      return null;
+    });
+};
+
+export const getNadzadatakVrstaList = (matura_id) => {
+  return fetch(`${server_url}/nadzadatak_vrsta/all?matura_id=${matura_id}`)
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -154,13 +171,15 @@ export const updateNadzadatak = (
   nadzadatak_tekst,
   slika,
   audio,
-  matura_id
+  matura_id,
+  odjeljak_id
 ) => {
   let data = {
     id: nadzadatak_id,
     vrsta_id: vrsta_id,
     broj_nadzadatka: broj_nadzadatka,
     nadzadatak_tekst: nadzadatak_tekst,
+    odjeljak_id: odjeljak_id,
   };
 
   if (slika) {
@@ -213,7 +232,8 @@ export const updateZadatak = (
   zadatak_tekst,
   slika,
   broj_bodova,
-  primjer
+  primjer,
+  odjeljak_id
 ) => {
   const data = {
     id: id,
@@ -223,6 +243,7 @@ export const updateZadatak = (
     zadatak_tekst: zadatak_tekst,
     broj_bodova: broj_bodova,
     primjer: primjer,
+    odjeljak_id: odjeljak_id,
   };
 
   if (slika) {

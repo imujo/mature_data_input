@@ -18,9 +18,10 @@ import {
   deleteZadatak,
   lock,
   deleteRjesenje,
+  getOdjeljakList,
 } from "./ServerFunctions";
 import { getKeyByValue } from "./ServerFunctions";
-
+import Odjeljak from "./inputs/Odjeljak";
 export default function AddZadatak({
   zadatak_id,
   matura_id,
@@ -36,15 +37,21 @@ export default function AddZadatak({
   notDeletable,
   zIndex = 0,
   locked,
+  odjeljak_id,
 }) {
   // VRSTA STATE
   const [vrsta, setVrsta] = useState("Odredi vrstu");
   const [vrstaOptions, setvrstaOptions] = useState([]);
   const [zadatakVrstaList, setZadatakVrstaList] = useState({});
 
+  // ODJELJAK STATE
+  const [odjeljak, setOdjeljak] = useState("");
+  const [odjeljakOptions, setOdjeljakOptions] = useState([]);
+  const [odjeljakList, setOdjeljakList] = useState({});
+
   // DATA STATE
   const [zadatakBroj, setZadatakBroj] = useState(
-    broj_zadatka ? broj_zadatka : 0
+    broj_zadatka ? broj_zadatka : 999
   );
   const [zadatakTekst, setZadatakTekst] = useState(
     zadatak_tekst ? zadatak_tekst : {}
@@ -58,13 +65,21 @@ export default function AddZadatak({
     if (zadatak_id && vrsta_id) {
       setVrsta(getKeyByValue(zadatakVrstaList, vrsta_id));
     }
+    if (zadatak_id && odjeljak_id) {
+      setOdjeljak(getKeyByValue(odjeljakList, odjeljak_id));
+    }
   }, [zadatakVrstaList]);
 
   // GET VRSTE
   useEffect(() => {
-    getZadatakVrstaList().then((data) => {
+    getZadatakVrstaList(matura_id).then((data) => {
       setZadatakVrstaList(data);
       setvrstaOptions(Object.keys(data));
+    });
+
+    getOdjeljakList(matura_id).then((data) => {
+      setOdjeljakList(data);
+      setOdjeljakOptions(Object.keys(data));
     });
 
     updateRjesenja();
@@ -89,6 +104,8 @@ export default function AddZadatak({
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("submit");
+
     for (let reff of elRefs) {
       reff.current.click();
     }
@@ -101,7 +118,8 @@ export default function AddZadatak({
       zadatakTekst,
       slika,
       brojBodova,
-      primjer
+      primjer,
+      odjeljakList[odjeljak]
     ).then(() =>
       lock(zadatak_id, "zadatak").then(() => {
         updateZadatci();
@@ -249,6 +267,12 @@ export default function AddZadatak({
         key={1}
       />,
       <BrojBodova value={brojBodova} setValue={setBrojBodova} key={2} />,
+      <CheckBox
+        title="Je li primjer?"
+        value={primjer}
+        setValue={setPrimjer}
+        key={2}
+      />,
     ],
     "nadopuni slobodno": [
       <BrojZadatka
@@ -296,7 +320,7 @@ export default function AddZadatak({
 
   // CLEAR DATA
   const clearData = () => {
-    setZadatakBroj(0);
+    setZadatakBroj(999);
     setZadatakTekst({});
     setSlika("");
     setBrojBodova(0);
@@ -331,12 +355,19 @@ export default function AddZadatak({
           <h2>Zadatak {zadatakBroj}</h2>
 
           {nadzadatak ? null : (
-            <VrstaZadatka
-              vrstaOptions={vrstaOptions}
-              vrsta={vrsta}
-              setVrsta={setVrsta}
-              clearData={clearData}
-            />
+            <>
+              <VrstaZadatka
+                vrstaOptions={vrstaOptions}
+                vrsta={vrsta}
+                setVrsta={setVrsta}
+                clearData={clearData}
+              />
+              <Odjeljak
+                options={odjeljakOptions}
+                option={odjeljak}
+                setOption={setOdjeljak}
+              />
+            </>
           )}
           {formatOptions[nadzadatak ? nadzadatak : vrsta]}
         </Form>

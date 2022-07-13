@@ -7,6 +7,7 @@ import FileInput from "./inputs/FileInput";
 import { deleteRjesenje, updateRjesenje } from "./ServerFunctions";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import TextArea from "./inputs/TextArea";
 
 export default function Rjesenje({
   rjesenje_id,
@@ -56,7 +57,7 @@ export default function Rjesenje({
   const formatOptions = {
     zaokruzivanje: [
       <Slovo title="Slovo" value={slovo} setValue={setSlovo} key={1} />,
-      <TextBox
+      <TextArea
         title="Tekst rjesenja"
         value={tekst}
         setValue={setTekst}
@@ -82,7 +83,7 @@ export default function Rjesenje({
       />,
     ],
     "kratki odgovor": [
-      <TextBox
+      <TextArea
         title="Tekst rjesenja"
         value={tekst}
         setValue={setTekst}
@@ -90,7 +91,7 @@ export default function Rjesenje({
       />,
     ],
     "dugi odgovor": [
-      <TextBox
+      <TextArea
         title="Tekst rjesenja"
         value={tekst}
         setValue={setTekst}
@@ -117,7 +118,7 @@ export default function Rjesenje({
     ],
     "tekst i zaokruzivanje": [
       <Slovo title="Slovo" value={slovo} setValue={setSlovo} key={1} />,
-      <TextBox
+      <TextArea
         title="Tekst rjesenja"
         value={tekst}
         setValue={setTekst}
@@ -149,7 +150,7 @@ export default function Rjesenje({
       <Slovo title="Slovo" value={slovo} setValue={setSlovo} key={1} />,
     ],
     "nadopuni slobodno": [
-      <TextBox
+      <TextArea
         title="Tekst rjesenja"
         value={tekst}
         setValue={setTekst}

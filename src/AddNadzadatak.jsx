@@ -10,6 +10,7 @@ import AddZadatak from "./AddZadatak";
 import VrstaZadatka from "./inputs/VrstaZadatka";
 import BrojZadatka from "./inputs/BrojZadatka";
 import FileInput from "./inputs/FileInput";
+import Odjeljak from "./inputs/Odjeljak";
 import {
   deleteNadzadatak,
   deleteZadatak,
@@ -18,6 +19,7 @@ import {
   lock,
   postZadatak,
   updateNadzadatak,
+  getOdjeljakList,
 } from "./ServerFunctions";
 import { getKeyByValue } from "./ServerFunctions";
 
@@ -31,11 +33,17 @@ export default function AddNadzadatak({
   audio_path,
   updateZadatci,
   locked,
+  odjeljak_id,
 }) {
   // VRSTA STATE
   const [vrsta, setVrsta] = useState("Odredi vrstu");
   const [nadzadatakVrstaList, setNadzadatakVrstaList] = useState({});
   const [vrstaOptions, setVrstaOptions] = useState([]);
+
+  // ODJELJAK STATE
+  const [odjeljak, setOdjeljak] = useState("");
+  const [odjeljakOptions, setOdjeljakOptions] = useState([]);
+  const [odjeljakList, setOdjeljakList] = useState({});
 
   // DATA STATE
   const [nadzadatakBroj, setNadzadatakBroj] = useState(
@@ -56,8 +64,14 @@ export default function AddNadzadatak({
       tekst,
       slika,
       audio,
-      matura_id
-    ).then(() => lock(nadzadatak_id, "nadzadatak").then(() => updateZadatci()));
+      matura_id,
+      odjeljakList[odjeljak]
+    ).then(() =>
+      lock(nadzadatak_id, "nadzadatak").then(() => {
+        updateZadatci();
+        updateNadzadatakZadatci();
+      })
+    );
   }
 
   // GET VRSTA
@@ -65,13 +79,21 @@ export default function AddNadzadatak({
     if (nadzadatak_id && vrsta_id) {
       setVrsta(getKeyByValue(nadzadatakVrstaList, vrsta_id));
     }
+    if (nadzadatak_id && odjeljak_id) {
+      setOdjeljak(getKeyByValue(odjeljakList, odjeljak_id));
+    }
   }, [nadzadatakVrstaList]);
 
   // GET VRSTE LIST
   useEffect(() => {
-    getNadzadatakVrstaList().then((data) => {
+    getNadzadatakVrstaList(matura_id).then((data) => {
       setNadzadatakVrstaList(data);
       setVrstaOptions(Object.keys(data));
+    });
+
+    getOdjeljakList(matura_id).then((data) => {
+      setOdjeljakList(data);
+      setOdjeljakOptions(Object.keys(data));
     });
   }, []);
 
@@ -158,6 +180,12 @@ export default function AddNadzadatak({
               value={nadzadatakBroj}
               setValue={setNadzadatakBroj}
               title="Broj nadzadatka"
+            />
+
+            <Odjeljak
+              options={odjeljakOptions}
+              option={odjeljak}
+              setOption={setOdjeljak}
             />
 
             <FileInput

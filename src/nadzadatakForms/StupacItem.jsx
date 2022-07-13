@@ -43,7 +43,6 @@ export default function StupacItem({
       >
         x
       </button>
-      {index}
       <Slovo title={type} value={slovoBroj} setValue={setSlovoBroj} />
 
       <TextBox title="Recenica" value={recenica} setValue={setRecenica} />

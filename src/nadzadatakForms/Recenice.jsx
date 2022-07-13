@@ -46,7 +46,6 @@ export default function Recenice({
       >
         x
       </button>
-      {index}
       <Slovo title="Slovo" value={slovo} setValue={setSlovo} />
 
       <TextBox title="Recenica" value={recenica} setValue={setRecenica} />

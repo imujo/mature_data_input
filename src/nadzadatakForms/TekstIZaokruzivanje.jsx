@@ -30,6 +30,9 @@ export default function TekstIZaokruzivanje({ value, setValue }) {
       <p className="napomena">
         NAPOMENA: oko boldanih rijeci stavi znakove **<span>primjer</span>**
       </p>
+      <p className="napomena">
+        NAPOMENA: oko footnote brojeva stavi znakove *!<span>primjer</span>*!
+      </p>
 
       <TextArea title="Footnote" value={footnote} setValue={setFootnote} />
     </>

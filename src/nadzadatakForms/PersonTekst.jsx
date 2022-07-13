@@ -46,7 +46,6 @@ export default function PersonTekst({
       >
         x
       </button>
-      {index}
 
       <Slovo title="Slovo" value={slovo} setValue={setSlovo} />
 

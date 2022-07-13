@@ -99,6 +99,7 @@ export default function Matura() {
           setOption={setPredmet}
           optionName={"predmet"}
           disabled={isMaturaSubmitted}
+          clearData={() => {}}
         ></DropdownComponent>
         <DropdownComponent
           options={godinaOpitions}
@@ -106,6 +107,7 @@ export default function Matura() {
           setOption={setGodina}
           optionName={"godina"}
           disabled={isMaturaSubmitted}
+          clearData={() => {}}
         ></DropdownComponent>
         <DropdownComponent
           options={razinaOptions}
@@ -113,6 +115,7 @@ export default function Matura() {
           setOption={setRazina}
           optionName={"razina"}
           disabled={isMaturaSubmitted}
+          clearData={() => {}}
         ></DropdownComponent>
         <DropdownComponent
           options={sezonaOptions}
@@ -120,6 +123,7 @@ export default function Matura() {
           setOption={setSezona}
           optionName={"sezona"}
           disabled={isMaturaSubmitted}
+          clearData={() => {}}
         ></DropdownComponent>
         <Button variant="danger" onClick={submit}>
           Submit
@@ -128,6 +132,16 @@ export default function Matura() {
       <h3 className="matura_name">{matura}</h3>
 
       {zadatciList.map((item, i) => {
+        let odjeljakId;
+
+        if (item.odjeljak_id) {
+          odjeljakId = item.odjeljak_id;
+        } else if (i > 0) {
+          let lastOdjeljakId = zadatciList[i - 1].odjeljak_id;
+          if (lastOdjeljakId) {
+            odjeljakId = lastOdjeljakId;
+          }
+        }
         if (item.type === "zadatak") {
           return (
             <AddZadatak
@@ -142,6 +156,7 @@ export default function Matura() {
               matura_id={maturaId}
               updateZadatci={updateZadatci}
               locked={item.islocked}
+              odjeljak_id={odjeljakId}
             />
           );
         } else if (item.type === "nadzadatak") {
@@ -157,6 +172,7 @@ export default function Matura() {
               matura_id={maturaId}
               locked={item.islocked}
               updateZadatci={updateZadatci}
+              odjeljak_id={odjeljakId}
             />
           );
         }
