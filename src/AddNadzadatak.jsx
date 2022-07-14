@@ -22,6 +22,7 @@ import {
   getOdjeljakList,
 } from "./ServerFunctions";
 import { getKeyByValue } from "./ServerFunctions";
+import TextBox from "./inputs/TextBox";
 
 export default function AddNadzadatak({
   matura_id,
@@ -34,6 +35,7 @@ export default function AddNadzadatak({
   updateZadatci,
   locked,
   odjeljak_id,
+  task_db,
 }) {
   // VRSTA STATE
   const [vrsta, setVrsta] = useState("Odredi vrstu");
@@ -52,6 +54,7 @@ export default function AddNadzadatak({
   const [slika, setSlika] = useState("");
   const [audio, setAudio] = useState("");
   const [tekst, setTekst] = useState(nadzadatak_tekst ? nadzadatak_tekst : {});
+  const [task, setTask] = useState(task_db ? task_db : "");
 
   // SUBMIT
   function submit(e) {
@@ -65,7 +68,8 @@ export default function AddNadzadatak({
       slika,
       audio,
       matura_id,
-      odjeljakList[odjeljak]
+      odjeljakList[odjeljak],
+      task
     ).then(() =>
       lock(nadzadatak_id, "nadzadatak").then(() => {
         updateZadatci();
@@ -132,6 +136,7 @@ export default function AddNadzadatak({
     setTekst({});
     setSlika("");
     setAudio("");
+    setTask("");
 
     updateNadzadatak(
       nadzadatak_id,
@@ -140,7 +145,9 @@ export default function AddNadzadatak({
       tekst,
       slika,
       audio,
-      matura_id
+      matura_id,
+      odjeljakList[odjeljak],
+      task
     ).then(() => updateZadatci());
 
     for (let i = 1; i < zadatciList.length; i++) {
@@ -187,6 +194,9 @@ export default function AddNadzadatak({
               option={odjeljak}
               setOption={setOdjeljak}
             />
+
+            <TextBox title="Task" value={task} setValue={setTask} />
+            <p className="napomena">npr u maturi iz ENG: Which person...</p>
 
             <FileInput
               title="Slika"

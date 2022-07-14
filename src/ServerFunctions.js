@@ -172,7 +172,8 @@ export const updateNadzadatak = (
   slika,
   audio,
   matura_id,
-  odjeljak_id
+  odjeljak_id,
+  task
 ) => {
   let data = {
     id: nadzadatak_id,
@@ -180,6 +181,7 @@ export const updateNadzadatak = (
     broj_nadzadatka: broj_nadzadatka,
     nadzadatak_tekst: nadzadatak_tekst,
     odjeljak_id: odjeljak_id,
+    task: task,
   };
 
   if (slika) {

@@ -173,6 +173,7 @@ export default function Matura() {
               locked={item.islocked}
               updateZadatci={updateZadatci}
               odjeljak_id={odjeljakId}
+              task_db={item.task}
             />
           );
         }
