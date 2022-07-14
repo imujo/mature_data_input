@@ -430,9 +430,10 @@ export const postNadzadatak = (
 export const postRjesenje = (
   matura_id,
   zadatak_id,
+  slovo,
+
   rjesenje_tekst,
   slika_path,
-  slovo,
   tocno,
   broj_bodova
 ) => {

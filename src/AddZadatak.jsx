@@ -90,8 +90,19 @@ export default function AddZadatak({
     rjesenja_db ? rjesenja_db : []
   );
 
-  function onAddRjesenje() {
-    postRjesenje(matura_id, zadatak_id).then(() => updateRjesenja());
+  async function onAddRjesenje() {
+    let nOfRjesenja = 1;
+    let slova = [null];
+    if (vrsta === "zaokruzivanje" || nadzadatak === "tekst i zaokruzivanje") {
+      nOfRjesenja = prompt("Koliko rjesenja zelis dodat? ");
+      slova = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
+    }
+
+    for (let i = 0; i < nOfRjesenja; i++) {
+      let sl = slova[i];
+      await postRjesenje(matura_id, zadatak_id, sl);
+    }
+    updateRjesenja();
   }
 
   const updateRjesenja = async () => {
