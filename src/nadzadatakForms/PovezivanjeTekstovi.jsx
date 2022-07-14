@@ -47,7 +47,7 @@ export default function PovezivanjeTekstovi({ value, setValue }) {
       {Object.values(osobeList).map((item, i) => {
         return (
           <PersonTekst
-            key={i}
+            key={item.index}
             index={item.index}
             slovo_db={item.slovo}
             ime_db={item.ime}

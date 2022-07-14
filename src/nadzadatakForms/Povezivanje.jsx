@@ -80,7 +80,7 @@ export default function Povezivanje({ value, setValue }) {
       {Object.values(stupac1).map((item, i) => {
         return (
           <StupacItem
-            key={i}
+            key={item.id}
             index={item.index}
             type="Broj"
             slovoBroj_db={item.slovoBroj}
@@ -104,7 +104,7 @@ export default function Povezivanje({ value, setValue }) {
       {Object.values(stupac2).map((item, i) => {
         return (
           <StupacItem
-            key={i}
+            key={item.id}
             index={item.index}
             type="Slovo"
             slovoBroj_db={item.slovoBroj}

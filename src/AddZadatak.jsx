@@ -271,7 +271,7 @@ export default function AddZadatak({
         title="Je li primjer?"
         value={primjer}
         setValue={setPrimjer}
-        key={2}
+        key={3}
       />,
     ],
     "nadopuni slobodno": [
@@ -309,7 +309,7 @@ export default function AddZadatak({
   const arrLength = rjesenjeList.length;
   const [elRefs, setElRefs] = React.useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // add or remove refs
     setElRefs((elRefs) =>
       Array(arrLength)
@@ -378,7 +378,7 @@ export default function AddZadatak({
             return (
               <Rjesenje
                 submitChildForm={elRefs[i]}
-                key={i}
+                key={item.id}
                 index={i}
                 rjesenje_id={item.id}
                 vrsta={vrsta}

@@ -69,7 +69,7 @@ export default function NadopuniIzbor({ value, setValue }) {
       {Object.values(receniceList).map((item, i) => {
         return (
           <Recenice
-            key={i}
+            key={item.index}
             index={item.index}
             slovo_db={item.slovo}
             recenica_db={item.recenica}

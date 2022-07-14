@@ -87,7 +87,10 @@ export default function Matura() {
   }
 
   const updateZadatci = () => {
-    getZadatakAll(maturaId).then((zadatci) => setZadatciList(zadatci));
+    getZadatakAll(maturaId).then((zadatci) => {
+      setZadatciList(zadatci);
+      console.log("update zadatci");
+    });
   };
 
   return (
