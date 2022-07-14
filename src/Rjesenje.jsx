@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slovo from "./inputs/Slovo";
 import CheckBox from "./inputs/CheckBox";
 import BrojBodova from "./inputs/BrojBodova";
@@ -48,7 +48,6 @@ export default function Rjesenje({
       slovo,
       tocno,
       brojBodova,
-      index,
       matura_id
     );
   };
@@ -166,6 +165,10 @@ export default function Rjesenje({
       <button className="close close_rjesenje" onClick={del}>
         x
       </button>
+
+      {`INDEX: ${index}`}
+      <br />
+      {`RJESENJE_ID: ${rjesenje_id}`}
 
       {formatOptions[nadzadatak ? nadzadatak : vrsta]}
 

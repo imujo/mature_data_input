@@ -91,13 +91,23 @@ export default function AddZadatak({
   );
 
   function onAddRjesenje() {
-    postRjesenje(matura_id, zadatak_id).then(() => updateRjesenja());
+    let nOfRjesenja = 1;
+    let slova = [null];
+    if (vrsta === "zaokruzivanje" || nadzadatak === "tekst i zaokruzivanje") {
+      nOfRjesenja = prompt("Koliko rjesenja zelis dodat? ");
+      slova = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
+    }
+
+    for (let i = 0; i < nOfRjesenja; i++) {
+      let sl = slova[i];
+      postRjesenje(matura_id, zadatak_id, sl).then(() => updateRjesenja());
+    }
   }
 
-  const updateRjesenja = async () => {
-    let rjesenja = await getRjesenja(zadatak_id);
-
-    setRjesenjeList(rjesenja);
+  const updateRjesenja = () => {
+    getRjesenja(zadatak_id).then((rjesenja) => {
+      setRjesenjeList(rjesenja);
+    });
   };
 
   // ON SUBMIT
@@ -306,18 +316,6 @@ export default function AddZadatak({
     deleteZadatak(zadatak_id).then(() => updateZadatci());
   };
 
-  const arrLength = rjesenjeList.length;
-  const [elRefs, setElRefs] = React.useState([]);
-
-  React.useEffect(() => {
-    // add or remove refs
-    setElRefs((elRefs) =>
-      Array(arrLength)
-        .fill()
-        .map((_, i) => elRefs[i] || createRef())
-    );
-  }, [arrLength]);
-
   // CLEAR DATA
   const clearData = () => {
     setZadatakBroj(999);
@@ -341,6 +339,41 @@ export default function AddZadatak({
       deleteRjesenje(rjesenje.id, false).then(() => updateRjesenja());
     }
   };
+
+  const [rjesenjaComponentsList, setRjesenjaComponentsList] = useState([]);
+  const [elRefs, setElRefs] = React.useState([]);
+
+  useEffect(() => {
+    for (let i = 0; i < rjesenjeList.length; i++) {
+      let item = rjesenjeList[i];
+      setRjesenjaComponentsList(
+        rjesenjaComponentsList.concat(
+          <Rjesenje
+            submitChildForm={elRefs[i]}
+            key={i}
+            index={i}
+            rjesenje_id={item.id}
+            vrsta={vrsta}
+            nadzadatak={nadzadatak}
+            rjesenje_tekst_db={item.rjesenje_tekst}
+            slovo_db={item.slovo}
+            tocno_db={item.tocno}
+            slika_path_db={item.slika_path}
+            broj_bodova_db={item.broj_bodova}
+            updateRjesenja={updateRjesenja}
+            matura_id={matura_id}
+          />
+        )
+      );
+    }
+
+    const arrLength = rjesenjaComponentsList.length;
+    setElRefs((elRefs) =>
+      Array(arrLength)
+        .fill()
+        .map((_, i) => elRefs[i] || createRef())
+    );
+  }, [rjesenjeList]);
 
   return (
     <div className="zadatakDiv" style={{ zIndex: zIndex }}>
@@ -374,7 +407,8 @@ export default function AddZadatak({
 
         <div className="rjesenje">
           <h2>Rjesenje</h2>
-          {rjesenjeList.map((item, i) => {
+          {/* {rjesenjeList.map((item, i) => {
+            console.log(rjesenjeList);
             return (
               <Rjesenje
                 submitChildForm={elRefs[i]}
@@ -392,7 +426,8 @@ export default function AddZadatak({
                 matura_id={matura_id}
               />
             );
-          })}
+          })} */}
+          {rjesenjaComponentsList}
 
           <Button
             variant="danger"

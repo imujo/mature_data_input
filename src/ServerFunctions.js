@@ -286,7 +286,6 @@ export const updateRjesenje = (
   slovo,
   tocno,
   broj_bodova,
-  index,
   matura_id
 ) => {
   const data = {
@@ -295,7 +294,6 @@ export const updateRjesenje = (
     slovo: slovo,
     tocno: tocno,
     broj_bodova: broj_bodova,
-    index: index,
   };
 
   if (slika) {
@@ -430,9 +428,9 @@ export const postNadzadatak = (
 export const postRjesenje = (
   matura_id,
   zadatak_id,
+  slovo,
   rjesenje_tekst,
   slika_path,
-  slovo,
   tocno,
   broj_bodova
 ) => {
