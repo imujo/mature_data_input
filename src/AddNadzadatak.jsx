@@ -242,6 +242,10 @@ export default function AddNadzadatak({
             ) : null}
 
             {vrsta === "nadopuni izbor" ? (
+              <NadopuniIzbor value={tekst} setValue={setTekst} napomena />
+            ) : null}
+
+            {vrsta === "govornik recenica" ? (
               <NadopuniIzbor value={tekst} setValue={setTekst} />
             ) : null}
 

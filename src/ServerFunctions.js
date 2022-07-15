@@ -7,16 +7,22 @@ export function getKeyByValue(object, value) {
 // GET FUNCTIONS
 export const getMaturaId = (predmet_id, godina, raizna, sezona) => {
   return fetch(
-    `${server_url}/matura_id?predmet_id=${predmet_id}&godina=${godina}&razina=${raizna}&sezona=${sezona}`
+    `${server_url}/matura_id?predmet_id=${predmet_id}&godina=${godina}&razina=${raizna}&sezona=${sezona}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("jwtToken"),
+      },
+    }
   )
+    .then((response) => response.json())
     .then((response) => {
-      if (response.ok) {
-        return response.json();
+      if (!response.isSuccess) {
+        return alert(response.msg);
+      } else {
+        return response.data;
       }
-      throw new Error("No matura found");
-    })
-    .then((data) => {
-      return data;
     })
     .catch((err) => {
       alert(err);
@@ -25,7 +31,13 @@ export const getMaturaId = (predmet_id, godina, raizna, sezona) => {
 };
 
 export const getPredmetiList = () => {
-  return fetch(`${server_url}/predmet/all`)
+  return fetch(`${server_url}/predmet/all`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
+  })
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -42,7 +54,13 @@ export const getPredmetiList = () => {
 };
 
 export const getZadatakVrstaList = (matura_id) => {
-  return fetch(`${server_url}/zadatak_vrsta/all?matura_id=${matura_id}`)
+  return fetch(`${server_url}/zadatak_vrsta/all?matura_id=${matura_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
+  })
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -59,7 +77,13 @@ export const getZadatakVrstaList = (matura_id) => {
 };
 
 export const getOdjeljakList = (matura_id) => {
-  return fetch(`${server_url}/odjeljak/all?matura_id=${matura_id}`)
+  return fetch(`${server_url}/odjeljak/all?matura_id=${matura_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
+  })
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -76,7 +100,13 @@ export const getOdjeljakList = (matura_id) => {
 };
 
 export const getNadzadatakVrstaList = (matura_id) => {
-  return fetch(`${server_url}/nadzadatak_vrsta/all?matura_id=${matura_id}`)
+  return fetch(`${server_url}/nadzadatak_vrsta/all?matura_id=${matura_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
+  })
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -93,7 +123,13 @@ export const getNadzadatakVrstaList = (matura_id) => {
 };
 
 export const getZadatakAll = (matura_id) => {
-  return fetch(`${server_url}/zadatak/all?matura_id=${matura_id}`)
+  return fetch(`${server_url}/zadatak/all?matura_id=${matura_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
+  })
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -110,7 +146,13 @@ export const getZadatakAll = (matura_id) => {
 };
 
 export const getZadatak = (zadatak_id) => {
-  return fetch(`${server_url}/zadatak/?zadatak_id=${zadatak_id}`)
+  return fetch(`${server_url}/zadatak/?zadatak_id=${zadatak_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
+  })
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -127,7 +169,13 @@ export const getZadatak = (zadatak_id) => {
 };
 
 export const getRjesenja = (zadatak_id) => {
-  return fetch(`${server_url}/rjesenja/?zadatak_id=${zadatak_id}`)
+  return fetch(`${server_url}/rjesenja/?zadatak_id=${zadatak_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
+  })
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -145,7 +193,14 @@ export const getRjesenja = (zadatak_id) => {
 
 export const getNadzadatakZadatci = (nadzadatak_id) => {
   return fetch(
-    `${server_url}/nadzadatak/zadatci?nadzadatak_id=${nadzadatak_id}`
+    `${server_url}/nadzadatak/zadatci?nadzadatak_id=${nadzadatak_id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("jwtToken"),
+      },
+    }
   )
     .then((response) => {
       if (response.ok) {
@@ -188,7 +243,12 @@ export const updateNadzadatak = (
     axios
       .post(
         `${server_url}/file-upload?table=nadzadatak&table_id=${nadzadatak_id}&matura_id=${matura_id}&type=slika`,
-        slika
+        slika,
+        {
+          headers: {
+            Authorization: localStorage.getItem("jwtToken"),
+          },
+        }
       )
       .then((res) => {
         console.log("Axios response: ", res);
@@ -199,7 +259,12 @@ export const updateNadzadatak = (
     axios
       .post(
         `${server_url}/file-upload?table=nadzadatak&table_id=${nadzadatak_id}&matura_id=${matura_id}&type=audio`,
-        audio
+        audio,
+        {
+          headers: {
+            Authorization: localStorage.getItem("jwtToken"),
+          },
+        }
       )
       .then((res) => {
         console.log("Axios response: ", res);
@@ -208,7 +273,10 @@ export const updateNadzadatak = (
 
   return fetch(`${server_url}/nadzadatak`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
     body: JSON.stringify(data),
   })
     .then((response) => {
@@ -252,7 +320,12 @@ export const updateZadatak = (
     axios
       .post(
         `${server_url}/file-upload?table=zadatak&table_id=${id}&matura_id=${matura_id}&type=slika`,
-        slika
+        slika,
+        {
+          headers: {
+            Authorization: localStorage.getItem("jwtToken"),
+          },
+        }
       )
       .then((res) => {
         console.log("Axios response: ", res);
@@ -261,7 +334,10 @@ export const updateZadatak = (
 
   return fetch(`${server_url}/zadatak`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
     body: JSON.stringify(data),
   })
     .then((response) => {
@@ -302,7 +378,12 @@ export const updateRjesenje = (
     axios
       .post(
         `${server_url}/file-upload?table=rjesenje&table_id=${rjesenje_id}&matura_id=${matura_id}&type=slika`,
-        slika
+        slika,
+        {
+          headers: {
+            Authorization: localStorage.getItem("jwtToken"),
+          },
+        }
       )
       .then((res) => {
         console.log("Axios response: ", res);
@@ -311,7 +392,10 @@ export const updateRjesenje = (
 
   return fetch(`${server_url}/rjesenje?=${rjesenje_id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
     body: JSON.stringify(data),
   })
     .then((response) => {
@@ -332,7 +416,10 @@ export const updateRjesenje = (
 export const lock = (id, type) => {
   return fetch(`${server_url}/lock?id=${id}&table=${type}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
   })
     .then((response) => {
       if (response.ok) {
@@ -372,7 +459,10 @@ export const postZadatak = (
 
   return fetch(`${server_url}/zadatak`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
     body: JSON.stringify(data),
   })
     .then((response) => {
@@ -409,7 +499,10 @@ export const postNadzadatak = (
 
   return fetch(`${server_url}/nadzadatak`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
     body: JSON.stringify(data),
   })
     .then((response) => {
@@ -449,7 +542,10 @@ export const postRjesenje = (
 
   return fetch(`${server_url}/rjesenje`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
     body: JSON.stringify(data),
   })
     .then((response) => {
@@ -476,6 +572,9 @@ export const deleteRjesenje = (rjesenje_id, prompt = true) => {
   ) {
     return fetch(`${server_url}/rjesenje?rjesenje_id=${rjesenje_id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: localStorage.getItem("jwtToken"),
+      },
     })
       .then((response) => {
         if (response) {
@@ -497,6 +596,9 @@ export const deleteZadatak = async (zadatak_id, prompt = true) => {
   if (!prompt || window.confirm(`Jesi li siguran da zelis izbrisat zadatak?`)) {
     return fetch(`${server_url}/zadatak?zadatak_id=${zadatak_id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: localStorage.getItem("jwtToken"),
+      },
     })
       .then((response) => {
         if (response.ok) {
@@ -518,6 +620,9 @@ export const deleteNadzadatak = async (nadzadatak_id) => {
   if (window.confirm(`Jesi li siguran da zelis izbrisat nadzadatak?`)) {
     return fetch(`${server_url}/nadzadatak?nadzadatak_id=${nadzadatak_id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: localStorage.getItem("jwtToken"),
+      },
     })
       .then((response) => {
         if (response.ok) {
@@ -541,6 +646,9 @@ export const deleteFile = async (table, table_id, type) => {
       `${server_url}/deleteFile?table=${table}&table_id=${table_id}&type=${type}`,
       {
         method: "DELETE",
+        headers: {
+          Authorization: localStorage.getItem("jwtToken"),
+        },
       }
     )
       .then((response) => {

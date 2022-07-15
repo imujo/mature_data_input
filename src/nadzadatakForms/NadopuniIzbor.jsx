@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import TextBox from "../inputs/TextBox";
 import TextArea from "../inputs/TextArea";
 
-export default function NadopuniIzbor({ value, setValue }) {
+export default function NadopuniIzbor({ value, setValue, napomena }) {
   const [naslov, setNaslov] = useState(
     Object.keys(value).length ? value.naslov : ""
   );
@@ -60,10 +60,12 @@ export default function NadopuniIzbor({ value, setValue }) {
 
       <TextArea title="Tekst" value={tekst} setValue={setTekst} />
 
-      <p className="napomena">
-        NAPOMENA: Zamijeni npr. (19)____ sa{" "}
-        <span className="bold"> %%19%%</span>
-      </p>
+      {napomena ? (
+        <p className="napomena">
+          NAPOMENA: Zamijeni npr. (19)____ sa{" "}
+          <span className="bold"> %%19%%</span>
+        </p>
+      ) : null}
       <br />
 
       {Object.values(receniceList).map((item, i) => {

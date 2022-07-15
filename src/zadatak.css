@@ -143,3 +143,13 @@ h2{
 .fileImage{
     width: 200px;
 }
+
+nav{
+    height: 60px;
+    width: 100%;
+    background-color: rgb(177, 177, 177);
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
