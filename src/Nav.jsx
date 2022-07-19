@@ -8,8 +8,13 @@ import { useEffect } from "react";
 export default function Nav() {
   const navigate = useNavigate();
   const [user, setUser] = useState({ firstname: "", lastname: "" });
+
   useEffect(() => {
-    getUser().then((user) => setUser(user));
+    getUser().then((user) => {
+      if (user) {
+        setUser(user);
+      }
+    });
   }, []);
 
   return (
@@ -20,7 +25,13 @@ export default function Nav() {
           Log out
         </Button>
       ) : (
-        <Button variant="primary" onClick={() => navigate("/login")}>
+        <Button
+          variant="primary"
+          onClick={() => {
+            navigate("/login");
+            navigate(0);
+          }}
+        >
           Log in
         </Button>
       )}

@@ -69,3 +69,26 @@ export const isAdmin = () => {
     })
     .catch(console.log);
 };
+
+export const registerUser = (firstname, lastname, username, password) => {
+  let data = {
+    firstname: firstname,
+    lastname: lastname,
+    username: username,
+    password: password,
+    type: 2,
+  };
+  return fetch(`${api}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((user) => {
+      return user;
+    })
+    .catch(console.log);
+};

@@ -53,6 +53,29 @@ export const getPredmetiList = () => {
     });
 };
 
+export const getPredmetFromPredmetId = (predmet_id) => {
+  return fetch(`${server_url}/predmet?predmet_id=${predmet_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken"),
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("No predmet found");
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((err) => {
+      alert(err);
+      return null;
+    });
+};
+
 export const getZadatakVrstaList = (matura_id) => {
   return fetch(`${server_url}/zadatak_vrsta/all?matura_id=${matura_id}`, {
     method: "GET",

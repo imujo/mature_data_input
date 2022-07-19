@@ -15,7 +15,8 @@ export default function Login() {
     let response = await logIn(username, password);
     console.log(response);
     if (response.isSuccess) {
-      navigate("/matura");
+      navigate("/");
+      navigate(0);
     } else {
       alert(`Error: ${response.msg}`);
     }

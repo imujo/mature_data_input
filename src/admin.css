@@ -1,0 +1,30 @@
+.users_table_item{
+    padding: 20px 40px;
+    background-color: rgb(226, 226, 226);
+    margin: 10px auto;
+
+    display: flex;
+}
+
+.table_item_box{
+    width: 200px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.user_table_item_selected{
+    border: 2px black solid;
+}
+
+.condition{
+    background-color: rgb(214, 214, 214);
+    margin: 50px 0;
+}
+
+.formItem{
+    display: flex;
+    gap: 20px;
+    margin: 20px ;
+}

@@ -1,29 +1,16 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React from "react";
 import { Navigate } from "react-router-dom";
-import { isAdmin } from "./AuthFunctions";
 
-function PrivateRoute({ to, admin, children }) {
+function PrivateRoute({ to, children }) {
   const isAuthenticated = localStorage.getItem("isAuth");
 
-  const [returned, setReturned] = useState(<></>);
+  let condition = isAuthenticated === "true";
 
-  useEffect(() => {
-    let condition = isAuthenticated === "true";
+  if (condition) {
+    return children;
+  }
 
-    if (admin) {
-      isAdmin().then((isadmin) => {
-        condition = isAuthenticated === "true" && isadmin;
-        if (condition) {
-          return setReturned(children);
-        }
-
-        return setReturned(<Navigate to={to} replace />);
-      });
-    }
-  }, []);
-
-  return returned;
+  return <Navigate to={to} replace />;
 }
 
 export default PrivateRoute;
