@@ -1,18 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import "./zadatak.css";
-import Login from "./Login";
-import PrivateRoute from "./PrivateRoute";
+import "./css/zadatak.css";
+import "./css/index.css";
+import Login from "./pages/Login";
+import PrivateRoute from "./privateRoutes/PrivateRoute";
 import Nav from "./Nav";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import App from "./App";
-import Matura from "./Matura";
+import App from "./pages/App";
+import Matura from "./pages/Matura";
 import "bootstrap/dist/css/bootstrap.min.css";
-import AdminRoute from "./AdminRoute";
-import Admin from "./Admin";
-import "./admin.css";
-import Register from "./Register";
+import AdminRoute from "./privateRoutes/AdminRoute";
+import Admin from "./pages/Admin";
+import "./css/admin.css";
+import Register from "./pages/Register";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import "../pages/App";
 import { Link } from "react-router-dom";
-import { isAdmin } from "./AuthFunctions";
+import { isAdmin } from "../functions/AuthFunctions";
 
 function App() {
   const [admin, setAdmin] = useState(false);

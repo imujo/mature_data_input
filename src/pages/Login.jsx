@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { logIn } from "./AuthFunctions";
-import TextBox from "./inputs/TextBox";
+import { logIn } from "../functions/AuthFunctions";
+import TextBox from "../inputs/TextBox";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {

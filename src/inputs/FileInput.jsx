@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import React from "react";
 import { Form } from "react-bootstrap";
-import { deleteFile } from "../ServerFunctions";
+import { deleteFile } from "../functions/ServerFunctions";
 
 export default function FileInput({
   title,

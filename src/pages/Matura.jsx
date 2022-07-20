@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import DropdownComponent from "./DropdownComponent";
+import DropdownComponent from "../inputs/DropdownComponent";
 import Button from "react-bootstrap/Button";
-import AddZadatak from "./AddZadatak";
-import AddNadzadatak from "./AddNadzadatak";
+import AddZadatak from "../maturaComponents/AddZadatak";
+import AddNadzadatak from "../maturaComponents/AddNadzadatak";
 import {
   getMaturaId,
   getPredmetiList,
   getZadatakAll,
   postNadzadatak,
   postZadatak,
-} from "./ServerFunctions";
+} from "../functions/ServerFunctions";
 import { useSearchParams } from "react-router-dom";
 
 export default function Matura() {

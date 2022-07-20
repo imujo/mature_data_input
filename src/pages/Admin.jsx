@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import UserAccess from "./adminComponents/UserAccess";
-import UsersTable from "./adminComponents/UsersTable";
-import { getUsers } from "./AdminFunctions";
+import UserAccess from "../adminComponents/UserAccess";
+import UsersTable from "../adminComponents/UsersTable";
+import { getUsers } from "../functions/AdminFunctions";
 
 export default function Admin() {
   const [users, setUsers] = useState([]);
@@ -41,7 +41,7 @@ export default function Admin() {
         Add User
       </Button>
 
-      {itemSelected == -1 ? null : (
+      {itemSelected === -1 ? null : (
         <UserAccess user={users[itemSelected]} itemSelected={itemSelected} />
       )}
     </main>

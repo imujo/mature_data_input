@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { addCondition, getUserAccessConditions } from "../AdminFunctions";
+import {
+  addCondition,
+  getUserAccessConditions,
+} from "../functions/AdminFunctions";
 import Condition from "./Condition";
 
 export default function UserAccess({ user, itemSelected }) {

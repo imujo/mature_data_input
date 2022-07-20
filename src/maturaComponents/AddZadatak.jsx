@@ -1,15 +1,15 @@
 import React, { createRef, useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
-import ZaokruzivanjeForm from "./zadatakForms/ZaokruzivanjeForm";
+import ZaokruzivanjeForm from "../zadatakForms/ZaokruzivanjeForm";
 import Button from "react-bootstrap/Button";
 import Rjesenje from "./Rjesenje";
-import KratkiOdgovorForm from "./zadatakForms/KratkiOdgovorForm";
-import DugiOdgovorForm from "./zadatakForms/DugiOdgovorForm";
-import VrstaZadatka from "./inputs/VrstaZadatka";
-import BrojZadatka from "./inputs/BrojZadatka";
-import BrojBodova from "./inputs/BrojBodova";
-import CheckBox from "./inputs/CheckBox";
-import FileInput from "./inputs/FileInput";
+import KratkiOdgovorForm from "../zadatakForms/KratkiOdgovorForm";
+import DugiOdgovorForm from "../zadatakForms/DugiOdgovorForm";
+import VrstaZadatka from "../inputs/VrstaZadatka";
+import BrojZadatka from "../inputs/BrojZadatka";
+import BrojBodova from "../inputs/BrojBodova";
+import CheckBox from "../inputs/CheckBox";
+import FileInput from "../inputs/FileInput";
 import {
   getZadatakVrstaList,
   updateZadatak,
@@ -19,9 +19,9 @@ import {
   lock,
   deleteRjesenje,
   getOdjeljakList,
-} from "./ServerFunctions";
-import { getKeyByValue } from "./ServerFunctions";
-import Odjeljak from "./inputs/Odjeljak";
+  getKeyByValue,
+} from "../functions/ServerFunctions";
+import Odjeljak from "../inputs/Odjeljak";
 export default function AddZadatak({
   zadatak_id,
   matura_id,

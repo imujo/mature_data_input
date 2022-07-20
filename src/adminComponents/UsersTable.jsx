@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import UsersTableItem from "./UsersTableItem";
 
 export default function UsersTable({

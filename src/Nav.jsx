@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { getUser, logout } from "./AuthFunctions";
-import { isAuth } from "./AuthFunctions";
+import { getUser, logout } from "./functions/AuthFunctions";
+import { isAuth } from "./functions/AuthFunctions";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 

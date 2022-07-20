@@ -1,6 +1,6 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
-import DropdownComponent from "../DropdownComponent";
+import DropdownComponent from "../inputs/DropdownComponent";
 
 export default function Odjeljak({ options, option, setOption }) {
   return (

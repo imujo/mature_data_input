@@ -6,8 +6,8 @@ import {
   getUserTypeFromId,
   getUserTypes,
   updateUserType,
-} from "../AdminFunctions";
-import DropdownComponent from "../DropdownComponent";
+} from "../functions/AdminFunctions";
+import DropdownComponent from "../inputs/DropdownComponent";
 import useDidMount from "../useDidMount";
 
 export default function UsersTableItem({
@@ -19,7 +19,7 @@ export default function UsersTableItem({
 }) {
   const [types, setTypes] = useState([]);
   const [userType, setUserType] = useState(0);
-  const [userTypeId, setUserTypeId] = useState(user.type ? user.type : 0);
+  const [userTypeId] = useState(user.type ? user.type : 0);
 
   useEffect(() => {
     getUserTypes().then((data) => {
@@ -39,7 +39,7 @@ export default function UsersTableItem({
   return (
     <div
       className={`users_table_item ${
-        itemSelected == i ? "user_table_item_selected" : ""
+        itemSelected === i ? "user_table_item_selected" : ""
       }`}
     >
       <div className={`table_item_box `}>{user.id}</div>

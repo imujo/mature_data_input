@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Slovo from "./inputs/Slovo";
-import CheckBox from "./inputs/CheckBox";
-import BrojBodova from "./inputs/BrojBodova";
-import FileInput from "./inputs/FileInput";
-import { deleteRjesenje, updateRjesenje } from "./ServerFunctions";
+import Slovo from "../inputs/Slovo";
+import CheckBox from "../inputs/CheckBox";
+import BrojBodova from "../inputs/BrojBodova";
+import FileInput from "../inputs/FileInput";
+import { deleteRjesenje, updateRjesenje } from "../functions/ServerFunctions";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import TextArea from "./inputs/TextArea";
+import TextArea from "../inputs/TextArea";
 
 export default function Rjesenje({
   rjesenje_id,

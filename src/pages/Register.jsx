@@ -2,8 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "./AuthFunctions";
-import TextBox from "./inputs/TextBox";
+import { registerUser } from "../functions/AuthFunctions";
+import TextBox from "../inputs/TextBox";
 
 export default function Register() {
   const [firstname, setFirstname] = useState("");

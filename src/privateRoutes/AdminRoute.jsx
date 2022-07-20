@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { isAdmin } from "./AuthFunctions";
+import { isAdmin } from "../functions/AuthFunctions";
 
 function AdminRoute({ to, children }) {
   const isAuthenticated = localStorage.getItem("isAuth");

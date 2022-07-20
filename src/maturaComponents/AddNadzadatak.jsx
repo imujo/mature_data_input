@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
-import TekstIZaokruzivanje from "./nadzadatakForms/TekstIZaokruzivanje";
-import PovezivanjeTekstovi from "./nadzadatakForms/PovezivanjeTekstovi";
-import NadopuniIzbor from "./nadzadatakForms/NadopuniIzbor";
-import NadopuniSlobodno from "./nadzadatakForms/NadopuniSlobodno";
-import Povezivanje from "./nadzadatakForms/Povezivanje";
+import TekstIZaokruzivanje from "../nadzadatakForms/TekstIZaokruzivanje";
+import PovezivanjeTekstovi from "../nadzadatakForms/PovezivanjeTekstovi";
+import NadopuniIzbor from "../nadzadatakForms/NadopuniIzbor";
+import NadopuniSlobodno from "../nadzadatakForms/NadopuniSlobodno";
+import Povezivanje from "../nadzadatakForms/Povezivanje";
 import { Button } from "react-bootstrap";
 import AddZadatak from "./AddZadatak";
-import VrstaZadatka from "./inputs/VrstaZadatka";
-import BrojZadatka from "./inputs/BrojZadatka";
-import FileInput from "./inputs/FileInput";
-import Odjeljak from "./inputs/Odjeljak";
+import VrstaZadatka from "../inputs/VrstaZadatka";
+import BrojZadatka from "../inputs/BrojZadatka";
+import FileInput from "../inputs/FileInput";
+import Odjeljak from "../inputs/Odjeljak";
 import {
   deleteNadzadatak,
   deleteZadatak,
@@ -20,9 +20,9 @@ import {
   postZadatak,
   updateNadzadatak,
   getOdjeljakList,
-} from "./ServerFunctions";
-import { getKeyByValue } from "./ServerFunctions";
-import TextBox from "./inputs/TextBox";
+  getKeyByValue,
+} from "../functions/ServerFunctions";
+import TextBox from "../inputs/TextBox";
 
 export default function AddNadzadatak({
   matura_id,

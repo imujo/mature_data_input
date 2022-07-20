@@ -2,9 +2,9 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { deleteCondition, updateCondition } from "../AdminFunctions";
-import DropdownComponent from "../DropdownComponent";
-import { getPredmetFromPredmetId } from "../ServerFunctions";
+import { deleteCondition, updateCondition } from "../functions/AdminFunctions";
+import DropdownComponent from "../inputs/DropdownComponent";
+import { getPredmetFromPredmetId } from "../functions/ServerFunctions";
 
 export default function Condition({ condition_data, updateConditionList }) {
   const [predmet, setPredmet] = useState(
